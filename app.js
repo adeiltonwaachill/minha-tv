@@ -1,32 +1,12 @@
 // =====================================================================
-// SUA LISTA M3U COMPLETA (Baseada no arquivo enviado)
+// 1. CONFIGURAÇÃO DA LISTA E SEGURANÇA
 // =====================================================================
-const M3U_DATA = `#EXTM3U
-#EXTINF:-1 tvg-name="COM Brasil" tvg-logo="https://i.imgur.com/c8ztQnF.png" group-title="Brasil",COM Brasil
-https://br5093.streamingdevideo.com.br/abc/abc/playlist.m3u8
-#EXTINF:-1 tvg-name="SBT" tvg-logo="https://logodownload.org/wp-content/uploads/2013/12/sbt-logo.png" group-title="Brasil",SBT
-https://www.youtube.com/watch?v=ABVQXgr2LW4
-#EXTINF:-1 tvg-name="AgroBrasil TV" tvg-logo="https://upload.wikimedia.org/wikipedia/pt/6/60/Logo_AgroBrasilTV.jpg" group-title="Brasil",AgroBrasil TV
-http://45.162.230.234:1935/agrobrasiltv/agrobrasiltv/playlist.m3u8
-#EXTINF:-1 tvg-name="Futura" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/c/ce/Canal_Futura_2022.svg" group-title="Brasil",Futura
-http://168.197.104.22/FUTURA/index.m3u8
-#EXTINF:-1 tvg-name="RBC" tvg-logo="https://portal.rbc1.com.br/public/portal/img/layout/logorbc.png" group-title="Brasil",RBC
-https://www.youtube.com/watch?v=oUdd3CsxYaE
-#EXTINF:-1 tvg-name="Record News" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/4/46/Record_News_logo_2023.svg" group-title="Brasil",Record News
-https://rnw-rn.otteravision.com/rnw/rn/rnw_rn.m3u8
-#EXTINF:-1 tvg-name="ISTV" tvg-logo="https://upload.wikimedia.org/wikipedia/pt/b/b5/Logotipo_da_ISTV.png" group-title="Brasil",ISTV
-https://video08.logicahost.com.br/istvnacional/srt.stream/istvnacional.m3u8
-#EXTINF:-1 tvg-name="Rede Brasil" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/d1/Marca_rede_brasil_rgb-color.png" group-title="Brasil",Rede Brasil
-https://video09.logicahost.com.br/redebrasiloficial/redebrasiloficial/playlist.m3u8
-#EXTINF:-1 tvg-name="TV Câmara" tvg-logo="https://i.imgur.com/UpV2PRk.png" group-title="Brasil",TV Câmara
-https://stream3.camara.gov.br/tv1/manifest.m3u8
-#EXTINF:-1 tvg-name="TVE RS" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/c/c2/Logotipo_da_TVE_RS.png" group-title="Brasil",TVE RS
-http://streaming.procergs.com.br:1935/tve/stve/playlist.m3u8
-#EXTINF:-1 tvg-name="TV Cultura" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/82/Cultura_logo_2013.svg" group-title="Brasil",TV Cultura
-https://player-tvcultura.stream.uol.com.br/live/tvcultura.m3u8`;
+const PLAYLIST_URL = 'https://iptv-org.github.io/iptv/countries/br.m3u';
+const ADULT_PASSWORD = "1234"; // Senha para liberar canais adultos
+let isAdultUnlocked = false;
 
 // =====================================================================
-// CONFIGURAÇÕES E VARIÁVEIS
+// 2. CONFIGURAÇÕES E VARIÁVEIS
 // =====================================================================
 const video = document.getElementById('videoPlayer');
 const videoWrapper = document.getElementById('videoWrapper');
@@ -40,7 +20,7 @@ let currentCategory = 'Todos';
 let hls = null;
 
 // =====================================================================
-// FUNÇÕES DE APOIO
+// 3. FUNÇÕES DE APOIO
 // =====================================================================
 function cleanChannelName(name) {
   return name
@@ -51,7 +31,6 @@ function cleanChannelName(name) {
     .trim();
 }
 
-// Ajuste no parseM3U para ler o tvg-name corretamente
 function parseM3U(text) {
   const lines = text.split('\n');
   const channels = [];
@@ -60,9 +39,8 @@ function parseM3U(text) {
   for (let line of lines) {
     line = line.trim();
     if (line.startsWith('#EXTINF:')) {
-      // Tenta pegar o tvg-name primeiro, se não, pega o texto após a última vírgula
-      let nameMatch = line.match(/tvg-name="([^"]+)"/);
-      let name = nameMatch ? nameMatch[1] : line.match(/,(.+)$/)?.[1] || 'Desconhecido';
+      const nameMatch = line.match(/,(.+)$/);
+      let name = nameMatch ? nameMatch[1].trim() : 'Desconhecido';
       name = cleanChannelName(name);
 
       const logoMatch = line.match(/tvg-logo="([^"]+)"/);
@@ -70,6 +48,17 @@ function parseM3U(text) {
 
       const groupMatch = line.match(/group-title="([^"]+)"/);
       let group = groupMatch ? groupMatch[1] : 'Geral';
+      
+      // Traduz categorias
+      const translations = {
+        'General': 'Geral', 'News': 'Notícias', 'Sports': 'Esportes',
+        'Movies': 'Filmes', 'Kids': 'Infantil', 'Religious': 'Gospel',
+        'Entertainment': 'Entretenimento', 'Culture': 'Cultura',
+        'Education': 'Educação', 'Legislative': 'Legislativo',
+        'Music': 'Música', 'Documentary': 'Documentário',
+        'Adult': 'Adulto', 'NSFW': 'Adulto', 'XXX': 'Adulto'
+      };
+      if (translations[group]) group = translations[group];
 
       currentInfo = { name, logo, group };
     } else if (line && !line.startsWith('#') && currentInfo) {
@@ -84,22 +73,82 @@ function parseM3U(text) {
 }
 
 // =====================================================================
-// INICIALIZAÇÃO
+// 4. CONTROLE DE ACESSO RESTRITO (CONTROLE PARENTAL)
 // =====================================================================
-function init() {
-  allChannels = parseM3U(M3U_DATA);
-  console.log(`Canais carregados: ${allChannels.length}`);
-  generateFilters();
-  renderGrid();
+function setupParentalControl() {
+  // Cria o botão de controle parental na barra de filtros
+  const btnAdult = document.createElement('button');
+  btnAdult.className = 'filter-btn';
+  btnAdult.style.marginLeft = 'auto'; // Joga para a direita
+  btnAdult.style.border = '1px solid #ff4d4d';
+  btnAdult.style.color = '#ff4d4d';
+  btnAdult.innerHTML = '🔞 Acesso Restrito';
+  
+  btnAdult.onclick = () => {
+    if (isAdultUnlocked) {
+      // Se já estiver desbloqueado, apenas avisa
+      alert("O acesso restrito já está liberado nesta sessão.");
+      return;
+    }
+    
+    const password = prompt("Digite a senha para acessar o conteúdo restrito:");
+    if (password === ADULT_PASSWORD) {
+      isAdultUnlocked = true;
+      btnAdult.innerHTML = '✅ Acesso Liberado';
+      btnAdult.style.border = '1px solid #65d99a';
+      btnAdult.style.color = '#65d99a';
+      renderGrid(); // Recarrega a grade para mostrar os canais adultos
+    } else if (password !== null) {
+      alert("Senha incorreta!");
+    }
+  };
+
+  filtersContainer.appendChild(btnAdult);
 }
 
 // =====================================================================
-// FILTROS E GRID
+// 5. INICIALIZAÇÃO E CARREGAMENTO
+// =====================================================================
+async function init() {
+  grid.innerHTML = '<div class="empty-state">Baixando lista com 399 canais brasileiros... Aguarde.</div>';
+  
+  try {
+    const response = await fetch(PLAYLIST_URL);
+    if (!response.ok) throw new Error('Falha ao baixar a lista');
+    
+    const text = await response.text();
+    allChannels = parseM3U(text);
+    
+    // Remove duplicados
+    const unique = new Map();
+    allChannels.forEach(ch => {
+      if (ch.url && !unique.has(ch.url)) unique.set(ch.url, ch);
+    });
+    allChannels = Array.from(unique.values());
+
+    // Ordena alfabeticamente
+    allChannels.sort((a, b) => a.name.localeCompare(b.name));
+
+    console.log(`Canais carregados: ${allChannels.length}`);
+    
+    generateFilters();
+    setupParentalControl(); // Adiciona o botão de segurança
+    renderGrid();
+  } catch (e) {
+    console.error(e);
+    grid.innerHTML = '<div class="empty-state">Erro ao carregar a lista. Verifique sua conexão.</div>';
+  }
+}
+
+// =====================================================================
+// 6. FILTROS E RENDERIZAÇÃO DO GRID
 // =====================================================================
 function generateFilters() {
   const categories = new Set();
   allChannels.forEach(ch => {
-    if (ch.group) categories.add(ch.group);
+    if (ch.group && ch.group !== 'Adulto') { // Não cria botão de filtro para adultos
+      categories.add(ch.group);
+    }
   });
 
   const sortedCategories = Array.from(categories).sort();
@@ -125,6 +174,11 @@ function renderGrid() {
   const term = searchInput.value.toLowerCase().trim();
   
   const filtered = allChannels.filter(ch => {
+    // Lógica de segurança: se for adulto e não estiver desbloqueado, não mostra
+    if (ch.group === 'Adulto' && !isAdultUnlocked) {
+      return false;
+    }
+
     const matchesSearch = ch.name.toLowerCase().includes(term);
     const matchesCategory = currentCategory === 'Todos' || ch.group === currentCategory;
     return matchesSearch && matchesCategory;
@@ -165,9 +219,15 @@ function renderGrid() {
 }
 
 // =====================================================================
-// PLAYER
+// 7. PLAYER
 // =====================================================================
 function playChannel(channel, cardElement) {
+  // Dupla checagem de segurança no player
+  if (channel.group === 'Adulto' && !isAdultUnlocked) {
+    alert("Acesso negado. Libere o acesso restrito primeiro.");
+    return;
+  }
+
   document.getElementById('playingName').textContent = channel.name;
   document.getElementById('playingCategory').textContent = channel.group;
   
@@ -182,7 +242,6 @@ function playChannel(channel, cardElement) {
   if (hls) { hls.destroy(); hls = null; }
   videoWrapper.innerHTML = '';
 
-  // Se for YouTube
   if (channel.url.includes('youtube.com') || channel.url.includes('youtu.be')) {
     let videoId = '';
     if (channel.url.includes('watch?v=')) videoId = channel.url.split('watch?v=')[1].split('&')[0];
@@ -204,7 +263,6 @@ function playChannel(channel, cardElement) {
     }
   }
 
-  // HLS (m3u8)
   const newVideo = document.createElement('video');
   newVideo.controls = true;
   newVideo.autoplay = true;
@@ -261,9 +319,9 @@ function playChannel(channel, cardElement) {
 }
 
 // =====================================================================
-// EVENTOS
+// 8. EVENTOS
 // =====================================================================
 searchInput.addEventListener('input', renderGrid);
 
-// Inicia a aplicação
+// Inicia tudo
 init();
