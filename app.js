@@ -1,11 +1,5 @@
 // =====================================================================
-// 1. CONFIGURAÇÕES E SEGURANÇA
-// =====================================================================
-const ADULT_PASSWORD = "9812"; // Senha do controle parental
-let isAdultUnlocked = false;
-
-// =====================================================================
-// 2. SUA LISTA M3U EMBUTIDA (DO ARQUIVO ENVIADO)
+// 1. SUA LISTA DE CANAIS EMBUTIDA (Organizada)
 // =====================================================================
 const M3U_DATA = `#EXTM3U
 #EXTINF:-1 tvg-id="CanalSete.br@SD" tvg-logo="https://i.imgur.com/0cq0BPp.png" group-title="Geral",Canal Sete
@@ -58,57 +52,7 @@ http://wz4.dnip.com.br/fratevitv/fratevitv.sdp/playlist.m3u8
 https://sitetv.brasilstream.com.br/hls/sitetv/index.m3u8?token=`;
 
 // =====================================================================
-// 3. CANAIS 18+ (EXTRAÍDOS DA WEB)
-// =====================================================================
-const ADULT_CHANNELS = [
-  { name: "SEXTREME", logo: "", url: "http://server-mjc.xyz:25461/live/xmmaNy6nX/3Z988hsacG/49.ts" },
-  { name: "SEXY HOT", logo: "", url: "http://server-mjc.xyz:25461/live/xmmaNy6nX/3Z988hsacG/50.ts" },
-  { name: "PLAYBOY TV", logo: "", url: "http://server-mjc.xyz:25461/live/xmmaNy6nX/3Z988hsacG/78.ts" },
-  { name: "PENTHOUSE", logo: "", url: "http://server-mjc.xyz:25461/live/xmmaNy6nX/3Z988hsacG/79.ts" },
-  { name: "Canal Adulto 3", logo: "", url: "http://painel.ebanonet.com.br:25461/254126/254126/6198" }
-];
-
-// =====================================================================
-// 4. FILMES FECHADOS (PREMIUM)
-// =====================================================================
-const PREMIUM_MOVIE_CHANNELS = [
-  { name: "Telecine Premium", logo: "", url: "https://brflu.walk-tv.com/5879/index.m3u8" },
-  { name: "Telecine Action", logo: "", url: "https://brflu.walk-tv.com/5875/index.m3u8" },
-  { name: "Telecine Pipoca", logo: "", url: "https://brflu.walk-tv.com/5877/index.m3u8" },
-  { name: "Telecine Touch", logo: "", url: "https://brflu.walk-tv.com/5880/index.m3u8" },
-  { name: "HBO", logo: "", url: "https://brflu.walk-tv.com/5891/index.m3u8" },
-  { name: "HBO 2", logo: "", url: "https://brflu.walk-tv.com/5857/index.m3u8" },
-  { name: "HBO Family", logo: "", url: "https://brflu.walk-tv.com/5859/index.m3u8" },
-  { name: "HBO Plus", logo: "", url: "https://brflu.walk-tv.com/5893/index.m3u8" },
-  { name: "Megapix", logo: "", url: "https://brflu.walk-tv.com/5822/index.m3u8" },
-  { name: "Universal Channel", logo: "", url: "http://195.181.163.183:2200/PY-N/Universal_TV_HD-br/index.m3u8" },
-  { name: "Warner Channel", logo: "", url: "http://195.181.163.183:2200/PY-N/Warner_Channel_HD-br/index.m3u8" },
-  { name: "Cinemax", logo: "", url: "https://edge-aws.aovivo.club/hls/s:209.126.108.100:81/cinemax720p_49117359_02026aee004980619ab8609e41c8b029debc3605/playlist.m3u8" },
-  { name: "TNT", logo: "", url: "https://cirion-aju.ittv.com.br/TNT/index.m3u8" }
-];
-
-// =====================================================================
-// 5. INFANTIL E GOSPEL (LINKS GARANTIDOS)
-// =====================================================================
-const KIDS_CHANNELS = [
-  { name: "Disney Channel", logo: "", url: "https://playplusdisney-lh.akamaihd.net/i/pp_dsneych@376337/index_720_av-p.m3u8" },
-  { name: "Disney Jr", logo: "", url: "https://playplusdisney-lh.akamaihd.net/i/pp_dsneyjr@376337/index_720_av-p.m3u8" },
-  { name: "Disney XD", logo: "", url: "https://playplusdisney-lh.akamaihd.net/i/pp_dsneyxd@376337/index_720_av-p.m3u8" },
-  { name: "Boomerang", logo: "", url: "http://195.181.163.183:2200/PY-N/Boomerang_HD-br/index.m3u8" },
-  { name: "Tooncast", logo: "", url: "http://pdsrv.io:25461/live/rafael1234/rafael1234/20485.m3u8" },
-  { name: "Nickelodeon", logo: "", url: "http://pdsrv.io:25461/live/rafael1234/rafael1234/7537.m3u8" }
-];
-
-const GOSPEL_CHANNELS = [
-  { name: "TV Evangelizar", logo: "", url: "http://tvevangelizar20.crossdigital.com.br:1935/evangelizar/tv/playlist.m3u8" },
-  { name: "Portal Gospel", logo: "", url: "http://s1.wsepanel.com:1935/lukfilm/lukfilm/playlist.m3u8" },
-  { name: "Rede Gospel", logo: "", url: "https://cdn.jmvstream.com/w/LVW-8719/LVW8719_AcLVAxWy5J/playlist.m3u8" },
-  { name: "TV Pai Eterno", logo: "", url: "https://video09.logicahost.com.br/paieterno/paieterno/chunklist_w1610240856.m3u8" },
-  { name: "RIT TV", logo: "", url: "https://acesso.ecast.site:3648/live/ritlive.m3u8" }
-];
-
-// =====================================================================
-// 6. ELEMENTOS DO HTML
+// 2. ELEMENTOS DO HTML
 // =====================================================================
 const video = document.getElementById('videoPlayer');
 const videoWrapper = document.getElementById('videoWrapper');
@@ -122,10 +66,15 @@ let currentCategory = 'Todos';
 let hls = null;
 
 // =====================================================================
-// 7. FUNÇÕES DE APOIO
+// 3. FUNÇÕES DE APOIO (Limpeza de Nomes e Leitura M3U)
 // =====================================================================
 function cleanChannelName(name) {
-  return name.replace(/Ⓨ/g, '').replace(/\(.*?\)/g, '').replace(/\[.*?\]/g, '').replace(/HD|SD|FHD/gi, '').trim();
+  return name
+    .replace(/Ⓨ/g, '')
+    .replace(/\(.*?\)/g, '')
+    .replace(/\[.*?\]/g, '')
+    .replace(/HD|SD|FHD/gi, '')
+    .trim();
 }
 
 function parseM3U(text) {
@@ -146,11 +95,12 @@ function parseM3U(text) {
       const groupMatch = line.match(/group-title="([^"]+)"/);
       let group = groupMatch ? groupMatch[1] : 'Geral';
       
+      // Organização Profissional: Traduzir categorias
       const translations = {
         'General': 'Geral', 'News': 'Notícias', 'Sports': 'Esportes', 'Movies': 'Filmes',
         'Kids': 'Infantil', 'Religious': 'Gospel', 'Entertainment': 'Entretenimento',
         'Culture': 'Cultura', 'Education': 'Educação', 'Legislative': 'Legislativo',
-        'Music': 'Música', 'Documentary': 'Documentário'
+        'Music': 'Música', 'Documentary': 'Documentário', 'Undefined': 'Outros'
       };
       if (translations[group]) group = translations[group];
 
@@ -167,60 +117,15 @@ function parseM3U(text) {
 }
 
 // =====================================================================
-// 8. CONTROLE PARENTAL
-// =====================================================================
-function setupParentalControl() {
-  const btnAdult = document.createElement('button');
-  btnAdult.className = 'filter-btn';
-  btnAdult.id = 'btnAdultControl';
-  btnAdult.style.marginLeft = 'auto';
-  btnAdult.style.border = '1px solid #ff4d4d';
-  btnAdult.style.color = '#ff4d4d';
-  btnAdult.innerHTML = '🔞 Acesso Restrito';
-  
-  btnAdult.onclick = () => {
-    if (isAdultUnlocked) {
-      alert("O conteúdo restrito já está liberado.");
-      return;
-    }
-    
-    const password = prompt("Digite a senha para acessar o conteúdo restrito:");
-    if (password === ADULT_PASSWORD) {
-      isAdultUnlocked = true;
-      btnAdult.innerHTML = '✅ Acesso Liberado';
-      btnAdult.style.border = '1px solid #65d99a';
-      btnAdult.style.color = '#65d99a';
-      
-      ADULT_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Adulto' }));
-      PREMIUM_MOVIE_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Filmes Fechados' }));
-      
-      generateFilters();
-      renderGrid();
-      alert("Acesso liberado! Canais de Filmes Fechados e Adultos foram adicionados.");
-    } else if (password !== null) {
-      alert("Senha incorreta!");
-    }
-  };
-  filtersContainer.appendChild(btnAdult);
-}
-
-// =====================================================================
-// 9. INICIALIZAÇÃO
+// 4. INICIALIZAÇÃO
 // =====================================================================
 function init() {
   grid.innerHTML = '<div class="empty-state">Processando canais...</div>';
   
-  if (!M3U_DATA || !M3U_DATA.includes('#EXTINF')) {
-    grid.innerHTML = '<div class="empty-state">Erro: A lista de canais está vazia.</div>';
-    return;
-  }
-
   try {
     allChannels = parseM3U(M3U_DATA);
     
-    KIDS_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Infantil' }));
-    GOSPEL_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Gospel' }));
-    
+    // Remove duplicados e ordena alfabeticamente
     const unique = new Map();
     allChannels.forEach(ch => {
       if (ch.url && !unique.has(ch.url)) unique.set(ch.url, ch);
@@ -228,26 +133,23 @@ function init() {
     allChannels = Array.from(unique.values()).sort((a, b) => a.name.localeCompare(b.name));
 
     generateFilters();
-    setupParentalControl();
     renderGrid();
   } catch (e) {
     console.error(e);
-    grid.innerHTML = '<div class="empty-state">Erro ao processar os canais.</div>';
+    grid.innerHTML = '<div class="empty-state">Erro ao processar a lista de canais.</div>';
   }
 }
 
 // =====================================================================
-// 10. FILTROS E GRID
+// 5. FILTROS E RENDERIZAÇÃO DO GRID
 // =====================================================================
 function generateFilters() {
   const categories = new Set();
   allChannels.forEach(ch => {
-    if ((ch.group === 'Adulto' || ch.group === 'Filmes Fechados') && !isAdultUnlocked) return;
     if (ch.group) categories.add(ch.group);
   });
 
   const sortedCategories = Array.from(categories).sort();
-  const existingAdultBtn = document.getElementById('btnAdultControl');
   
   filtersContainer.innerHTML = '<button class="filter-btn active" data-category="Todos">Todos</button>';
 
@@ -264,15 +166,11 @@ function generateFilters() {
     };
     filtersContainer.appendChild(btn);
   });
-  
-  if (existingAdultBtn) filtersContainer.appendChild(existingAdultBtn);
 }
 
 function renderGrid() {
   const term = searchInput.value.toLowerCase().trim();
   const filtered = allChannels.filter(ch => {
-    if ((ch.group === 'Adulto' || ch.group === 'Filmes Fechados') && !isAdultUnlocked) return false;
-
     const matchesSearch = ch.name.toLowerCase().includes(term);
     const matchesCategory = currentCategory === 'Todos' || ch.group === currentCategory;
     return matchesSearch && matchesCategory;
@@ -293,6 +191,7 @@ function renderGrid() {
       card.classList.add('active');
     }
 
+    // Fallback caso a logo não carregue
     const artContent = ch.logo 
       ? `<img src="${ch.logo}" alt="${ch.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
          <div class="fallback-text" style="display:none;">${ch.name.substring(0, 3)}</div>`
@@ -313,14 +212,9 @@ function renderGrid() {
 }
 
 // =====================================================================
-// 11. PLAYER
+// 6. PLAYER
 // =====================================================================
 function playChannel(channel, cardElement) {
-  if ((channel.group === 'Adulto' || channel.group === 'Filmes Fechados') && !isAdultUnlocked) {
-    alert("Acesso negado. Libere o acesso restrito primeiro.");
-    return;
-  }
-
   document.getElementById('playingName').textContent = channel.name;
   document.getElementById('playingCategory').textContent = channel.group;
   
@@ -402,7 +296,9 @@ function playChannel(channel, cardElement) {
 }
 
 // =====================================================================
-// 12. EVENTOS
+// 7. EVENTOS
 // =====================================================================
 searchInput.addEventListener('input', renderGrid);
+
+// Inicializa
 init();
