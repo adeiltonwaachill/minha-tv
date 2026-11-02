@@ -3,384 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d18">
-  <title>Minha.TV | Sua televisão</title>
+  <meta name="theme-color" content="#0f1115">
+  <title>Minha.TV | Live TV</title>
+  
+  <!-- Biblioteca HLS.js para transmissões ao vivo -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-  <style>
-    :root {
-      --bg: #080d18;
-      --surface: #111a2b;
-      --surface2: #18243a;
-      --primary: #f28c28;
-      --text: #f5f7fb;
-      --muted: #aab5c7;
-      --border: rgba(255,255,255,.09);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: Arial, sans-serif; min-height: 100vh; }
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    
-    /* Topbar simplificada */
-    .topbar {
-      height: 64px; padding: 0 4%; display: flex; align-items: center; justify-content: space-between;
-      background: rgba(8,13,24,.98); border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; z-index: 30;
-    }
-    .logo { font-size: 24px; font-weight: 900; letter-spacing: -1.5px; }
-    .logo span { color: var(--primary); }
-    .search { width: min(300px, 40vw); padding: 9px 14px; border: 1px solid var(--border); border-radius: 8px; color: white; background: var(--surface); outline: none; }
-    .search:focus { border-color: var(--primary); }
-
-    /* Player fixo no topo (estilo "Hero") */
-    .player-hero {
-      background: #000;
-      border-bottom: 1px solid var(--border);
-      padding: 20px 4% 0;
-      box-shadow: 0 10px 30px rgba(0,0,0,.5);
-    }
-    .player-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: #000;
-      border-radius: 12px 12px 0 0;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-bottom: none;
-    }
-    .video-wrapper { width: 100%; aspect-ratio: 16 / 9; max-height: 60vh; background: #000; position: relative; }
-    .video-wrapper video { width: 100%; height: 100%; display: block; object-fit: contain; background: #000; }
-    
-    .player-bar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 12px 18px; background: var(--surface); border-top: 1px solid var(--border);
-    }
-    .now-playing { font-weight: 700; font-size: 15px; }
-    .now-category { color: var(--muted); font-size: 12px; margin-left: 10px; font-weight: 400; }
-    .status-badge { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; background: rgba(255,65,65,.15); color: #ff7777; }
-
-    /* Grid de canais */
-    .main-content { padding: 25px 4% 60px; max-width: 1400px; margin: 0 auto; }
-    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-    .filter-btn {
-      padding: 8px 16px; border: 1px solid var(--border); border-radius: 30px;
-      color: var(--muted); background: var(--surface); font-size: 13px; font-weight: 700; transition: .2s;
-    }
-    .filter-btn.active, .filter-btn:hover { background: var(--primary); border-color: var(--primary); color: #111; }
-
-    .channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-    .channel-card {
-      border: 1px solid var(--border); background: var(--surface); border-radius: 10px;
-      overflow: hidden; cursor: pointer; transition: transform .2s, border-color .2s;
-      display: flex; flex-direction: column;
-    }
-    .channel-card:hover { transform: translateY(-3px); border-color: var(--primary); }
-    .channel-card.selected { border: 2px solid var(--primary); }
-    
-    .channel-art {
-      height: 90px; display: flex; align-items: center; justify-content: center;
-      background: radial-gradient(circle at 50% 40%, rgba(242,140,40,.15), transparent 70%), var(--surface2);
-      font-size: 22px; font-weight: 900; color: var(--primary); text-align: center; padding: 0 8px;
-      text-transform: uppercase; letter-spacing: -0.5px;
-    }
-    .channel-info { padding: 10px 12px; }
-    .channel-info h3 { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
-    .channel-info p { font-size: 11px; color: var(--muted); text-transform: capitalize; }
-
-    .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--muted); }
-    .loading-text { text-align: center; padding: 40px; color: var(--primary); grid-column: 1 / -1; }
-
-    /* Ajustes Mobile */
-    @media (max-width: 700px) {
-      .topbar { flex-wrap: wrap; height: auto; padding: 12px 4%; gap: 10px; }
-      .search { width: 100%; order: 3; }
-      .player-hero { padding: 12px 4% 0; }
-      .channel-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .channel-art { height: 70px; font-size: 18px; }
-    }
-  </style>
+  
+  <!-- Link para o arquivo de estilos -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+  <!-- Topbar -->
   <header class="topbar">
     <div class="logo">MINHA<span>.TV</span></div>
-    <input type="search" class="search" id="search" placeholder="Buscar canal em português..." aria-label="Buscar canal">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="search" class="search" id="search" placeholder="Buscar canal..." aria-label="Buscar">
+    </div>
   </header>
 
-  <!-- Player Fixo no Topo -->
+  <!-- Player Fixo -->
   <section class="player-hero">
     <div class="player-container">
-      <div class="video-wrapper">
+      <div class="video-wrapper" id="videoWrapper">
         <video id="videoPlayer" controls autoplay muted playsinline crossorigin="anonymous"></video>
       </div>
-      <div class="player-bar">
+      <div class="player-info">
         <div>
-          <span class="now-playing" id="playingName">Selecione um canal abaixo</span>
-          <span class="now-category" id="playingCategory"></span>
+          <div class="now-title" id="playingName">Selecione um canal</div>
+          <div class="now-category" id="playingCategory">Live TV</div>
         </div>
-        <div class="status-badge" id="playerStatus">● AGUARDANDO</div>
+        <div class="status-badge" id="playerStatus" style="display:none;">
+          <span class="status-dot"></span> AO VIVO
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Conteúdo Principal -->
   <main class="main-content">
-    <div class="filters">
-      <button class="filter-btn active" data-category="all">Todos (Brasil)</button>
-      <button class="filter-btn" data-category="kids">Infantil</button>
-      <button class="filter-btn" data-category="religious">Gospel/Religioso</button>
-      <button class="filter-btn" data-category="movies">Filmes/Séries</button>
+    <div class="filters" id="filtersContainer">
+      <button class="filter-btn active" data-category="Todos">Todos</button>
+      <!-- Filtros gerados por JS -->
     </div>
 
     <div class="channel-grid" id="channelGrid">
-      <div class="loading-text">Carregando canais brasileiros...</div>
+      <div class="empty-state">Carregando canais...</div>
     </div>
   </main>
 
-  <script>
-    // Fonte principal: Lista oficial do Brasil do iptv-org (focada em PT-BR)
-    const BR_PLAYLIST = 'https://iptv-org.github.io/iptv/countries/br.m3u';
-    
-    // Mapeamento de categorias da lista para as nossas abas
-    // O iptv-org usa "Kids", "Religious", "Movies", etc.
-    const CATEGORY_MAP = {
-      'kids': 'Kids',
-      'religious': 'Religious',
-      'movies': 'Movies'
-    };
-
-    let allChannels = [];
-    let currentCategory = 'all';
-    const video = document.getElementById('videoPlayer');
-    const grid = document.getElementById('channelGrid');
-    const searchInput = document.getElementById('search');
-    const statusDiv = document.getElementById('playerStatus');
-    let hls = null;
-
-    // Parser M3U
-    function parseM3U(text) {
-      const lines = text.split('\n');
-      const channels = [];
-      let currentInfo = null;
-
-      for (let line of lines) {
-        line = line.trim();
-        if (line.startsWith('#EXTINF:')) {
-          const nameMatch = line.match(/,(.+)$/);
-          const name = nameMatch ? nameMatch[1].trim() : 'Canal Desconhecido';
-          
-          // Tenta pegar o grupo/categoria
-          const groupMatch = line.match(/group-title="([^"]+)"/);
-          const group = groupMatch ? groupMatch[1] : '';
-          
-          // Tenta pegar a logo
-          const logoMatch = line.match(/tvg-logo="([^"]+)"/);
-          const logo = logoMatch ? logoMatch[1] : '';
-
-          currentInfo = { name, group, logo };
-        } else if (line && !line.startsWith('#') && currentInfo) {
-          // URL do stream
-          channels.push({ ...currentInfo, url: line });
-          currentInfo = null;
-        }
-      }
-      return channels;
-    }
-
-    // Carrega a lista do Brasil
-    async function loadChannels() {
-      try {
-        grid.innerHTML = '<div class="loading-text">Carregando lista do Brasil...</div>';
-        const response = await fetch(BR_PLAYLIST);
-        if (!response.ok) throw new Error('Falha na rede');
-        const text = await response.text();
-        
-        let parsed = parseM3U(text);
-        
-        // Filtra apenas canais que parecem ser em português ou genéricos (evita lixo)
-        // Como a lista é do Brasil, a maioria já é PT.
-        // Remove duplicados por URL
-        const unique = new Map();
-        parsed.forEach(c => {
-          if (c.url && !unique.has(c.url)) unique.set(c.url, c);
-        });
-        allChannels = Array.from(unique.values());
-
-        // Ordena alfabeticamente para facilitar
-        allChannels.sort((a, b) => a.name.localeCompare(b.name));
-
-        renderGrid();
-      } catch (e) {
-        console.error(e);
-        grid.innerHTML = '<div class="empty-state">Erro ao carregar a lista. Verifique sua conexão ou tente novamente mais tarde.</div>';
-      }
-    }
-
-    // Renderiza a grade de cards
-    function renderGrid() {
-      const term = searchInput.value.toLowerCase().trim();
-      
-      const filtered = allChannels.filter(ch => {
-        // Filtro de busca
-        const matchesSearch = ch.name.toLowerCase().includes(term);
-        if (!matchesSearch) return false;
-
-        // Filtro de categoria
-        if (currentCategory === 'all') return true;
-        
-        const targetGroup = CATEGORY_MAP[currentCategory];
-        if (!targetGroup) return true; // fallback
-        
-        // Verifica se o grupo do canal contém a palavra-chave (ex: "Kids", "Religious")
-        return ch.group.toLowerCase().includes(targetGroup.toLowerCase());
-      });
-
-      grid.innerHTML = '';
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '<div class="empty-state">Nenhum canal encontrado nesta categoria.</div>';
-        return;
-      }
-
-      // Limita a renderização para performance (ex: 300 canais)
-      const limit = 300;
-      const toRender = filtered.slice(0, limit);
-
-      toRender.forEach(ch => {
-        const card = document.createElement('div');
-        card.className = 'channel-card';
-        // Destaca o canal selecionado
-        if (document.getElementById('playingName').textContent === ch.name) {
-          card.classList.add('selected');
-        }
-
-        // Usa a logo se existir, senão as iniciais
-        let artContent = ch.name.substring(0, 3).toUpperCase();
-        if (ch.logo) {
-          // Se a logo falhar, volta para as iniciais via onerror
-          artContent = `<img src="${ch.logo}" alt="${ch.name}" style="max-height: 50px; max-width: 90%; object-fit: contain;" onerror="this.parentElement.textContent='${ch.name.substring(0,3).toUpperCase()}'">`;
-        }
-
-        card.innerHTML = `
-          <div class="channel-art">${artContent}</div>
-          <div class="channel-info">
-            <h3 title="${ch.name}">${ch.name}</h3>
-            <p>${ch.group || 'Geral'}</p>
-          </div>
-        `;
-
-        card.addEventListener('click', () => playChannel(ch));
-        grid.appendChild(card);
-      });
-
-      if (filtered.length > limit) {
-        const more = document.createElement('div');
-        more.className = 'empty-state';
-        more.textContent = `Mostrando ${limit} de ${filtered.length} canais. Refine sua busca.`;
-        grid.appendChild(more);
-      }
-    }
-
-    // Reproduz o canal escolhido
-    function playChannel(channel) {
-      const url = channel.url;
-      
-      // Atualiza a barra de informações
-      document.getElementById('playingName').textContent = channel.name;
-      document.getElementById('playingCategory').textContent = `(${channel.group || 'Geral'})`;
-      
-      // Reseta status
-      statusDiv.textContent = '● CARREGANDO...';
-      statusDiv.style.color = '#f28c28';
-
-      // Limpa player anterior
-      if (hls) {
-        hls.destroy();
-        hls = null;
-      }
-      video.removeAttribute('src');
-      video.load();
-
-      // Verifica se o navegador suporta HLS nativamente (Safari) ou via hls.js
-      if (Hls.isSupported()) {
-        hls = new Hls({
-          // Habilita legendas se o stream tiver (closed captions embutidas)
-          enableWebVTT: true,
-          enableIMSC1: true
-        });
-        hls.loadSource(url);
-        hls.attachMedia(video);
-        
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-          video.play().catch(e => console.log("Autoplay bloqueado:", e));
-          statusDiv.textContent = '● AO VIVO';
-          statusDiv.style.color = '#65d99a';
-          
-          // Se o stream tiver faixas de legenda, o controle nativo do vídeo mostrará a opção "CC"
-        });
-
-        hls.on(Hls.Events.ERROR, function(event, data) {
-          if (data.fatal) {
-            statusDiv.textContent = '● CANAL INDISPONÍVEL';
-            statusDiv.style.color = '#ff7777';
-            console.error('Erro no stream:', data);
-            // Tenta recuperar ou apenas mostra erro
-            switch(data.type) {
-              case Hls.ErrorTypes.NETWORK_ERROR:
-                hls.startLoad();
-                break;
-              case Hls.ErrorTypes.MEDIA_ERROR:
-                hls.recoverMediaError();
-                break;
-              default:
-                hls.destroy();
-                break;
-            }
-          }
-        });
-      } 
-      // Fallback nativo (Safari/iOS)
-      else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
-        video.addEventListener('loadedmetadata', () => {
-          video.play().catch(e => console.log("Autoplay bloqueado:", e));
-          statusDiv.textContent = '● AO VIVO';
-          statusDiv.style.color = '#65d99a';
-        });
-        video.addEventListener('error', () => {
-          statusDiv.textContent = '● CANAL INDISPONÍVEL';
-          statusDiv.style.color = '#ff7777';
-        });
-      } else {
-        statusDiv.textContent = '● NAVEGADOR INCOMPATÍVEL';
-        statusDiv.style.color = '#ff7777';
-      }
-
-      // Atualiza seleção visual na grade
-      document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('selected'));
-      // Encontra o card clicado e marca (simples, baseado no evento atual)
-      // Como estamos recriando a grade, apenas re-renderizamos para refletir o estado
-      // Mas para evitar piscar, apenas marcamos o elemento se possível.
-      // Solução simples: re-renderiza (pode perder scroll, então evitamos se possível)
-      // Vamos apenas destacar o card que foi clicado manualmente:
-      // (Nota: em uma app real, usaríamos estado, mas aqui o clique já é o feedback)
-    }
-
-    // Eventos de filtro
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentCategory = btn.dataset.category;
-        renderGrid();
-      });
-    });
-
-    // Busca
-    searchInput.addEventListener('input', renderGrid);
-
-    // Inicialização
-    loadChannels();
-
-  </script>
+  <!-- Link para o arquivo de lógica -->
+  <script src="app.js"></script>
 </body>
 </html>
