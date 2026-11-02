@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071321">
+<title>Minha.TV | Sua televisão online</title>
+
+<style>
+:root {
+  --bg: #071321;
+  --panel: #102238;
+  --blue: #2585e8;
+  --orange: #f29b38;
+  --white: #f4f7fb;
+  --muted: #a9bbce;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--white);
+  font-family: Arial, sans-serif;
+}
+
+header {
+  padding: 24px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ffffff20;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.logo span { color: var(--orange); }
+
+main { padding: 30px 5%; }
+
+h1 { font-size: 34px; }
+
+.subtitle { color: var(--muted); }
+
+.categories {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 25px 0;
+}
+
+button {
+  cursor: pointer;
+  color: white;
+  background: var(--panel);
+  border: 1px solid #ffffff25;
+  padding: 13px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+button:focus {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+button.active {
+  background: var(--blue);
+}
+
+.channels {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 18px;
+}
+
+.channel {
+  text-align: left;
+  padding: 20px;
+  min-height: 145px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #173653, #102238);
+}
+
+.channel .icon {
+  display: block;
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.channel strong {
+  display: block;
+  font-size: 18px;
+}
+
+.channel small {
+  display: block;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.player {
+  display: none;
+  margin-top: 30px;
+  background: black;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.player.show { display: block; }
+
+.player-header {
+  padding: 12px;
+  background: var(--panel);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+video {
+  width: 100%;
+  max-height: 65vh;
+  display: block;
+  background: black;
+}
+
+.info {
+  margin-top: 25px;
+  padding: 18px;
+  background: #ffffff0c;
+  color: var(--muted);
+  border-radius: 12px;
+  line-height: 1.6;
+}
+
+footer {
+  padding: 25px 5%;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  header { padding: 18px 5%; }
+  .logo { font-size: 26px; }
+  h1 { font-size: 27px; }
+  .channels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .channel { padding: 14px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">MINHA<span>.TV</span></div>
+  <div>Televisão online</div>
+</header>
+
+<main>
+
+<h1>O que você deseja assistir?</h1>
+<p class="subtitle">
+  Seus conteúdos em um só lugar.
+</p>
+
+<nav class="categories">
+  <button class="active" data-filter="todos">Todos</button>
+  <button data-filter="aberta">TV aberta</button>
+  <button data-filter="noticias">Notícias</button>
+  <button data-filter="religioso">Religiosos</button>
+  <button data-filter="infantil">Infantil</button>
+  <button data-filter="teste">Demonstração</button>
+</nav>
+
+<section class="channels">
+
+  <button class="channel" data-cat="teste"
+    data-video="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    data-name="Vídeo de demonstração">
+    <span class="icon">▶️</span>
+    <strong>Vídeo de teste</strong>
+    <small>Testar reprodução</small>
+  </button>
+
+  <button class="channel" data-cat="aberta">
+    <span class="icon">📺</span>
+    <strong>TV aberta</strong>
+    <small>Canais disponíveis em breve</small>
+  </button>
+
+  <button class="channel" data-cat="noticias">
+    <span class="icon">📰</span>
+    <strong>Notícias</strong>
+    <small>Transmissões oficiais</small>
+  </button>
+
+  <button class="channel" data-cat="religioso">
+    <span class="icon">✝️</span>
+    <strong>Religiosos</strong>
+    <small>Programação cristã</small>
+  </button>
+
+  <button class="channel" data-cat="infantil">
+    <span class="icon">🧸</span>
+    <strong>Infantil</strong>
+    <small>Conteúdos para crianças</small>
+  </button>
+
+  <button class="channel" data-cat="aberta">
+    <span class="icon">⭐</span>
+    <strong>Favoritos</strong>
+    <small>Seus canais preferidos</small>
+  </button>
+
+</section>
+
+<section class="player" id="player">
+  <div class="player-header">
+    <strong id="channelName">Reprodução</strong>
+    <button onclick="fecharPlayer()">Fechar</button>
+  </div>
+  <video id="video" controls playsinline></video>
+</section>
+
+<div class="info">
+  <strong>Bem-vindo à Minha.TV!</strong><br>
+  Uma plataforma independente para organizar e assistir
+  conteúdos de vídeo em diferentes dispositivos.
+
+  Os canais reais serão adicionados usando transmissões
+  oficiais ou autorizadas. O vídeo de demonstração serve
+  apenas para testar o funcionamento do player.
+</div>
+
+</main>
+
+<footer>
+  MINHA.TV — Sua televisão online.
+  <br>Plataforma independente.
+</footer>
+
+<script>
+const botoes = document.querySelectorAll(".categories button");
+const canais = document.querySelectorAll(".channel");
+
+botoes.forEach(botao => {
+  botao.addEventListener("click", () => {
+    botoes.forEach(b => b.classList.remove("active"));
+    botao.classList.add("active");
+
+    const filtro = botao.dataset.filter;
+
+    canais.forEach(canal => {
+      canal.style.display =
+        filtro === "todos" || canal.dataset.cat === filtro
+        ? "" : "none";
+    });
+  });
+});
+
+const player = document.getElementById("player");
+const video = document.getElementById("video");
+
+canais.forEach(canal => {
+  canal.addEventListener("click", () => {
+    const endereco = canal.dataset.video;
+
+    if (!endereco) {
+      alert("Este canal ainda não possui transmissão configurada.");
+      return;
+    }
+
+    document.getElementById("channelName").textContent =
+      canal.dataset.name;
+
+    video.src = endereco;
+    player.classList.add("show");
+
+    video.play().catch(() => {});
+
+    player.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+  });
+});
+
+function fecharPlayer() {
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+  player.classList.remove("show");
+}
+</script>
+
+</body>
+</html>
