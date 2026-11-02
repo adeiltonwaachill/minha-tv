@@ -1,18 +1,64 @@
 // =====================================================================
 // 1. CONFIGURAÇÕES E SEGURANÇA
 // =====================================================================
-// Lista de fontes para tentar carregar os canais (Fallback)
-const PLAYLISTS = [
-  'https://iptv-org.github.io/iptv/countries/br.m3u',
-  'https://raw.githubusercontent.com/iptv-com/iptv/main/lists/brazil.m3u'
-];
-
-// SENHA PARA O CONTEÚDO RESTRITO
-const ADULT_PASSWORD = "9812"; 
+const ADULT_PASSWORD = "9812"; // Senha do controle parental
 let isAdultUnlocked = false;
 
 // =====================================================================
-// 2. CANAIS 18+ (EXTRAÍDOS DA WEB)
+// 2. SUA LISTA M3U EMBUTIDA (DO ARQUIVO ENVIADO)
+// =====================================================================
+const M3U_DATA = `#EXTM3U
+#EXTINF:-1 tvg-id="CanalSete.br@SD" tvg-logo="https://i.imgur.com/0cq0BPp.png" group-title="Geral",Canal Sete
+http://play.canalsete.com.br:1935/canalsete/xpl-c7_source/playlist.m3u8
+#EXTINF:-1 tvg-id="CanalUOL.br@SD" tvg-logo="https://conteudo.imguol.com.br/c/play/logo_canaluol_2024.svg" group-title="Geral",Canal UOL (1080p)
+https://video24.mais.uol.com.br/live/6146.m3u8
+#EXTINF:-1 tvg-id="ChromaTV.br@SD" tvg-logo="https://i.imgur.com/SnaIMgj.png" group-title="Entretenimento",Chroma TV (480p)
+https://5c483b9d1019c.streamlock.net/8054/8054/playlist.m3u8
+#EXTINF:-1 tvg-id="CinturaoVerde.br@SD" tvg-logo="https://eswqkrogupaisirwcsys.supabase.co/storage/v1/object/public/mbc-media/canais/1775688612576-u0628igjimf.png" group-title="Geral",Cinturao Verde
+https://play.redecinturaoverde.com.br/playlist.m3u8
+#EXTINF:-1 tvg-id="ConexaoTV.br@SD" tvg-logo="https://i.imgur.com/CJ9SPsZ.png" group-title="Geral",Conexao TV (720p)
+https://5a57bda70564a.streamlock.net/conexaotv/conexaotv.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="ESPN4.br@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png" group-title="Esportes",ESPN 4 (Brazil) (1080p)
+http://181.78.197.59:8000/play/a07n/index.m3u8
+#EXTINF:-1 tvg-id="ESPN.br@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="Esportes",ESPN (Brazil) (1080p)
+http://181.78.197.59:8000/play/a07z/index.m3u8
+#EXTINF:-1 tvg-id="FalaLitoral.br@SD" tvg-logo="https://i.imgur.com/NF6PL8O.png" group-title="Geral",Fala Litoral (480p)
+https://5c483b9d1019c.streamlock.net/falalitoraltv/falalitoraltv/playlist.m3u8
+#EXTINF:-1 tvg-id="FonteTV.br@SD" tvg-logo="https://i.imgur.com/7q2BmNc.png" group-title="Gospel",Fonte TV
+https://59fb88a1b1108.streamlock.net/fonte/_definst_/fontetv/chunklist_w1224511652.m3u8
+#EXTINF:-1 tvg-id="MBCBrasilTV.br@SD" tvg-logo="https://eswqkrogupaisirwcsys.supabase.co/storage/v1/object/public/mbc-media/canais/1775702325773-d10vtu076za.png" group-title="Geral",MBC Brasil TV
+https://play.mbcbrasil.tv.br/playlist.m3u8
+#EXTINF:-1 tvg-id="NovaEraTV.br@SD" tvg-logo="https://i.imgur.com/IK3F9Uq.png" group-title="Geral",Nova Era TV (1080p) [Not 24/7]
+http://wz3.dnip.com.br:1935/novaeratv/novaeratv.sdp/live.m3u8
+#EXTINF:-1 tvg-id="TelecineAction.br@SD" tvg-logo="https://i.imgur.com/BHYWG0h.png" group-title="Filmes",Telecine Action (1080p)
+http://46.151.196.223:14326/
+#EXTINF:-1 tvg-id="TVClube.br@SD" tvg-logo="https://i.imgur.com/CpXjcyE.png" group-title="Geral",TV Clube (720p)
+https://5c483b9d1019c.streamlock.net/8186/8186/playlist.m3u8
+#EXTINF:-1 tvg-id="TVGloboBrasilia.br@SD" tvg-logo="" group-title="Geral",TV Globo Brasilia (1080p)
+http://79.127.238.228:14173/
+#EXTINF:-1 tvg-id="TVMaisMarica.br@SD" tvg-logo="https://i.imgur.com/lgCRX7q.png" group-title="Geral",TV Mais Marica (1080p)
+https://5cf4a2c2512a2.streamlock.net/tvmaismarica/tvmaismarica/playlist.m3u8
+#EXTINF:-1 tvg-id="TVPantanalMS.br@SD" tvg-logo="https://i.imgur.com/0FOmktl.png" group-title="Geral",TV Pantanal MS (360p) [Not 24/7]
+https://5a2b083e9f360.streamlock.net/tvpantanal/tvpantanal.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="TVPassoFundo.br@SD" tvg-logo="https://i.imgur.com/QFE6TiV.png" group-title="Geral",TV Passo Fundo (720p)
+https://5a57bda70564a.streamlock.net/tvpasso/tvpasso.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="TVSimCachoeiro.br@SD" tvg-logo="https://i.imgur.com/t5oUK3C.png" group-title="Notícias",TV Sim Cachoeiro (720p)
+https://5cf4a2c2512a2.streamlock.net/8104/8104/playlist.m3u8
+#EXTINF:-1 tvg-id="TVSimSaoMateus.br@SD" tvg-logo="https://i.imgur.com/t5oUK3C.png" group-title="Notícias",TV Sim Sao Mateus (720p)
+https://5cf4a2c2512a2.streamlock.net/8236/8236/playlist.m3u8
+#EXTINF:-1 tvg-id="TVSuldeMinas.br@SD" tvg-logo="https://i.imgur.com/hPh8cxK.png" group-title="Geral",TV Sul de Minas (720p)
+https://5cf4a2c2512a2.streamlock.net/tvsuldeminas/tvsuldeminas/playlist.m3u8
+#EXTINF:-1 tvg-id="TVTerceiroAnjo.br@SD" tvg-logo="https://i.imgur.com/PExKWNv.png" group-title="Gospel",TV Terceiro Anjo (360p)
+https://streamer1.streamhost.org/salive/GMI3anjoh/playlist.m3u8
+#EXTINF:-1 tvg-id="TVUFG.br@SD" tvg-logo="https://i.imgur.com/Yp3dbJo.png" group-title="Educação",TV UFG (720p) [Not 24/7]
+http://flash.softhost.com.br:1935/ufg/tvufgweb/playlist.m3u8
+#EXTINF:-1 tvg-id="TVVicosa.br@SD" tvg-logo="https://i.imgur.com/TZF55f9.png" group-title="Entretenimento",TV Vicosa (480p)
+http://wz4.dnip.com.br/fratevitv/fratevitv.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="UnisulTV.br@SD" tvg-logo="https://i.imgur.com/N0TvAFz.png" group-title="Cultura",Unisul TV (720p)
+https://sitetv.brasilstream.com.br/hls/sitetv/index.m3u8?token=`;
+
+// =====================================================================
+// 3. CANAIS 18+ (EXTRAÍDOS DA WEB)
 // =====================================================================
 const ADULT_CHANNELS = [
   { name: "SEXTREME", logo: "", url: "http://server-mjc.xyz:25461/live/xmmaNy6nX/3Z988hsacG/49.ts" },
@@ -23,22 +69,17 @@ const ADULT_CHANNELS = [
 ];
 
 // =====================================================================
-// 3. FILMES FECHADOS (PREMIUM)
+// 4. FILMES FECHADOS (PREMIUM)
 // =====================================================================
 const PREMIUM_MOVIE_CHANNELS = [
-  // Telecine
   { name: "Telecine Premium", logo: "", url: "https://brflu.walk-tv.com/5879/index.m3u8" },
   { name: "Telecine Action", logo: "", url: "https://brflu.walk-tv.com/5875/index.m3u8" },
   { name: "Telecine Pipoca", logo: "", url: "https://brflu.walk-tv.com/5877/index.m3u8" },
   { name: "Telecine Touch", logo: "", url: "https://brflu.walk-tv.com/5880/index.m3u8" },
-  
-  // HBO
   { name: "HBO", logo: "", url: "https://brflu.walk-tv.com/5891/index.m3u8" },
   { name: "HBO 2", logo: "", url: "https://brflu.walk-tv.com/5857/index.m3u8" },
   { name: "HBO Family", logo: "", url: "https://brflu.walk-tv.com/5859/index.m3u8" },
   { name: "HBO Plus", logo: "", url: "https://brflu.walk-tv.com/5893/index.m3u8" },
-  
-  // Outros
   { name: "Megapix", logo: "", url: "https://brflu.walk-tv.com/5822/index.m3u8" },
   { name: "Universal Channel", logo: "", url: "http://195.181.163.183:2200/PY-N/Universal_TV_HD-br/index.m3u8" },
   { name: "Warner Channel", logo: "", url: "http://195.181.163.183:2200/PY-N/Warner_Channel_HD-br/index.m3u8" },
@@ -47,7 +88,7 @@ const PREMIUM_MOVIE_CHANNELS = [
 ];
 
 // =====================================================================
-// 4. INFANTIL E GOSPEL (LINKS GARANTIDOS)
+// 5. INFANTIL E GOSPEL (LINKS GARANTIDOS)
 // =====================================================================
 const KIDS_CHANNELS = [
   { name: "Disney Channel", logo: "", url: "https://playplusdisney-lh.akamaihd.net/i/pp_dsneych@376337/index_720_av-p.m3u8" },
@@ -67,7 +108,7 @@ const GOSPEL_CHANNELS = [
 ];
 
 // =====================================================================
-// 5. ELEMENTOS DO HTML
+// 6. ELEMENTOS DO HTML
 // =====================================================================
 const video = document.getElementById('videoPlayer');
 const videoWrapper = document.getElementById('videoWrapper');
@@ -81,7 +122,7 @@ let currentCategory = 'Todos';
 let hls = null;
 
 // =====================================================================
-// 6. FUNÇÕES DE APOIO
+// 7. FUNÇÕES DE APOIO
 // =====================================================================
 function cleanChannelName(name) {
   return name.replace(/Ⓨ/g, '').replace(/\(.*?\)/g, '').replace(/\[.*?\]/g, '').replace(/HD|SD|FHD/gi, '').trim();
@@ -126,11 +167,12 @@ function parseM3U(text) {
 }
 
 // =====================================================================
-// 7. CONTROLE PARENTAL
+// 8. CONTROLE PARENTAL
 // =====================================================================
 function setupParentalControl() {
   const btnAdult = document.createElement('button');
   btnAdult.className = 'filter-btn';
+  btnAdult.id = 'btnAdultControl';
   btnAdult.style.marginLeft = 'auto';
   btnAdult.style.border = '1px solid #ff4d4d';
   btnAdult.style.color = '#ff4d4d';
@@ -142,14 +184,13 @@ function setupParentalControl() {
       return;
     }
     
-    const password = prompt("Digite a senha para acessar o conteúdo restrito (Filmes e Adultos):");
+    const password = prompt("Digite a senha para acessar o conteúdo restrito:");
     if (password === ADULT_PASSWORD) {
       isAdultUnlocked = true;
       btnAdult.innerHTML = '✅ Acesso Liberado';
       btnAdult.style.border = '1px solid #65d99a';
       btnAdult.style.color = '#65d99a';
       
-      // Adiciona os canais protegidos
       ADULT_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Adulto' }));
       PREMIUM_MOVIE_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Filmes Fechados' }));
       
@@ -164,43 +205,22 @@ function setupParentalControl() {
 }
 
 // =====================================================================
-// 8. CARREGAMENTO INICIAL (COM TESTE DE FONTES)
+// 9. INICIALIZAÇÃO
 // =====================================================================
-async function init() {
-  grid.innerHTML = '<div class="empty-state">Baixando lista de canais...</div>';
+function init() {
+  grid.innerHTML = '<div class="empty-state">Processando canais...</div>';
   
-  let text = null;
-
-  for (const url of PLAYLISTS) {
-    try {
-      const response = await fetch(url);
-      if (response.ok) {
-        text = await response.text();
-        if (text.includes('#EXTM3U') || text.includes('#EXTINF')) {
-          console.log(`Lista carregada com sucesso de: ${url}`);
-          break;
-        } else {
-          text = null;
-        }
-      }
-    } catch (e) {
-      console.warn(`Falha ao tentar ${url}:`, e);
-    }
-  }
-
-  if (!text) {
-    grid.innerHTML = '<div class="empty-state">Não foi possível carregar nenhuma lista. Verifique sua conexão.</div>';
+  if (!M3U_DATA || !M3U_DATA.includes('#EXTINF')) {
+    grid.innerHTML = '<div class="empty-state">Erro: A lista de canais está vazia.</div>';
     return;
   }
 
   try {
-    allChannels = parseM3U(text);
+    allChannels = parseM3U(M3U_DATA);
     
-    // Adiciona os canais fixos
     KIDS_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Infantil' }));
     GOSPEL_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Gospel' }));
     
-    // Remove duplicados
     const unique = new Map();
     allChannels.forEach(ch => {
       if (ch.url && !unique.has(ch.url)) unique.set(ch.url, ch);
@@ -212,12 +232,12 @@ async function init() {
     renderGrid();
   } catch (e) {
     console.error(e);
-    grid.innerHTML = '<div class="empty-state">Erro ao processar a lista de canais.</div>';
+    grid.innerHTML = '<div class="empty-state">Erro ao processar os canais.</div>';
   }
 }
 
 // =====================================================================
-// 9. FILTROS E GRID
+// 10. FILTROS E GRID
 // =====================================================================
 function generateFilters() {
   const categories = new Set();
@@ -293,7 +313,7 @@ function renderGrid() {
 }
 
 // =====================================================================
-// 10. PLAYER
+// 11. PLAYER
 // =====================================================================
 function playChannel(channel, cardElement) {
   if ((channel.group === 'Adulto' || channel.group === 'Filmes Fechados') && !isAdultUnlocked) {
@@ -337,7 +357,7 @@ function playChannel(channel, cardElement) {
     }
   }
 
-  // HLS (.m3u8 ou .ts)
+  // HLS
   const newVideo = document.createElement('video');
   newVideo.controls = true;
   newVideo.autoplay = true;
@@ -382,7 +402,7 @@ function playChannel(channel, cardElement) {
 }
 
 // =====================================================================
-// 11. EVENTOS
+// 12. EVENTOS
 // =====================================================================
 searchInput.addEventListener('input', renderGrid);
 init();
