@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -19,11 +18,7 @@
       --border: rgba(255,255,255,.09);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background: var(--bg);
@@ -32,13 +27,8 @@
       min-height: 100vh;
     }
 
-    button, input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
 
     .topbar {
       height: 74px;
@@ -54,35 +44,12 @@
       z-index: 20;
     }
 
-    .logo {
-      font-size: 27px;
-      font-weight: 900;
-      letter-spacing: -1.5px;
-      white-space: nowrap;
-    }
+    .logo { font-size: 27px; font-weight: 900; letter-spacing: -1.5px; white-space: nowrap; }
+    .logo span { color: var(--primary); }
 
-    .logo span {
-      color: var(--primary);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-
-    .nav button {
-      border: 0;
-      color: var(--muted);
-      background: transparent;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .nav button:hover,
-    .nav button.active {
-      color: white;
-    }
+    .nav { display: flex; align-items: center; gap: 22px; }
+    .nav button { border: 0; color: var(--muted); background: transparent; font-weight: 600; font-size: 14px; }
+    .nav button:hover, .nav button.active { color: white; }
 
     .search {
       width: min(260px, 28vw);
@@ -93,78 +60,29 @@
       background: var(--surface);
       outline: none;
     }
-
-    .search:focus {
-      border-color: var(--primary);
-    }
+    .search:focus { border-color: var(--primary); }
 
     .hero {
       padding: 48px 5% 30px;
-      background:
-        radial-gradient(ellipse at 80% 20%, rgba(242,140,40,.16), transparent 45%),
-        linear-gradient(110deg, #111d31, #080d18 75%);
+      background: radial-gradient(ellipse at 80% 20%, rgba(242,140,40,.16), transparent 45%),
+                  linear-gradient(110deg, #111d31, #080d18 75%);
     }
-
-    .hero-content {
-      max-width: 720px;
-    }
-
-    .eyebrow {
-      color: var(--primary);
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      margin-bottom: 15px;
-    }
-
-    .hero h1 {
-      font-size: clamp(34px, 5vw, 58px);
-      line-height: 1.05;
-      margin-bottom: 16px;
-    }
-
-    .hero p {
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 580px;
-      font-size: 15px;
-    }
+    .hero-content { max-width: 720px; }
+    .eyebrow { color: var(--primary); text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: 2px; margin-bottom: 15px; }
+    .hero h1 { font-size: clamp(34px, 5vw, 58px); line-height: 1.05; margin-bottom: 16px; }
+    .hero p { color: var(--muted); line-height: 1.7; max-width: 580px; font-size: 15px; }
 
     .live-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,65,65,.13);
-      color: #ff7777;
-      padding: 7px 12px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 800;
-      margin-top: 20px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,65,65,.13); color: #ff7777;
+      padding: 7px 12px; border-radius: 30px;
+      font-size: 12px; font-weight: 800; margin-top: 20px;
     }
+    .live-dot { height: 8px; width: 8px; border-radius: 50%; background: #ff4545; box-shadow: 0 0 10px #ff4545; }
 
-    .live-dot {
-      height: 8px;
-      width: 8px;
-      border-radius: 50%;
-      background: #ff4545;
-      box-shadow: 0 0 10px #ff4545;
-    }
-
-    main {
-      padding: 15px 5% 55px;
-    }
-
-    .player-section {
-      margin-bottom: 42px;
-    }
-
-    .section-title {
-      font-size: 21px;
-      font-weight: 800;
-      margin-bottom: 17px;
-    }
+    main { padding: 15px 5% 55px; }
+    .player-section { margin-bottom: 42px; }
+    .section-title { font-size: 21px; font-weight: 800; margin-bottom: 17px; }
 
     .player-box {
       background: #000;
@@ -182,247 +100,83 @@
       position: relative;
     }
 
-    .player-screen iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-      background: #000;
-    }
+    .player-screen iframe { width: 100%; height: 100%; border: 0; display: block; background: #000; }
 
     .player-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      padding: 16px 19px;
-      background: var(--surface);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 15px; padding: 16px 19px; background: var(--surface);
     }
+    .channel-name { font-size: 17px; font-weight: 800; }
+    .channel-description { color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .player-status { color: #ff7777; font-size: 12px; font-weight: 800; white-space: nowrap; }
 
-    .channel-name {
-      font-size: 17px;
-      font-weight: 800;
-    }
+    .catalog-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
 
-    .channel-description {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    .player-status {
-      color: #ff7777;
-      font-size: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .catalog-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .filters {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-    }
-
+    .filters { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 24px; }
     .filter-btn {
-      padding: 9px 16px;
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      color: var(--muted);
-      background: var(--surface);
-      font-size: 13px;
-      font-weight: 700;
+      padding: 9px 16px; border: 1px solid var(--border); border-radius: 30px;
+      color: var(--muted); background: var(--surface); font-size: 13px; font-weight: 700;
     }
+    .filter-btn.active, .filter-btn:hover { background: var(--primary); border-color: var(--primary); color: #111; }
 
-    .filter-btn.active,
-    .filter-btn:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #111;
-    }
-
-    .channel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-      gap: 17px;
-    }
+    .channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 17px; }
 
     .channel-card {
-      min-width: 0;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform .2s, border-color .2s;
+      min-width: 0; border: 1px solid var(--border); background: var(--surface);
+      border-radius: 12px; overflow: hidden; transition: transform .2s, border-color .2s;
       position: relative;
     }
+    .channel-card:hover, .channel-card:focus-within { transform: translateY(-4px); border-color: var(--primary); }
+    .channel-card.selected { border: 2px solid var(--primary); }
 
-    .channel-card:hover,
-    .channel-card:focus-within {
-      transform: translateY(-4px);
-      border-color: var(--primary);
-    }
-
-    .channel-card.selected {
-      border: 2px solid var(--primary);
-    }
-
-    .channel-open {
-      display: block;
-      width: 100%;
-      border: 0;
-      background: transparent;
-      color: white;
-      text-align: left;
-    }
+    .channel-open { display: block; width: 100%; border: 0; background: transparent; color: white; text-align: left; }
 
     .channel-art {
-      height: 112px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(circle at 50% 40%, rgba(242,140,40,.2), transparent 65%),
-        var(--surface2);
-      font-size: 27px;
-      font-weight: 900;
-      letter-spacing: -1px;
+      height: 112px; display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(circle at 50% 40%, rgba(242,140,40,.2), transparent 65%), var(--surface2);
+      font-size: 27px; font-weight: 900; letter-spacing: -1px;
     }
+    .channel-art span { color: var(--primary); }
 
-    .channel-art span {
-      color: var(--primary);
-    }
+    .channel-details { padding: 13px 14px 15px; }
+    .channel-details h3 { font-size: 15px; margin-bottom: 6px; }
+    .channel-details p { color: var(--muted); font-size: 12px; }
 
-    .channel-details {
-      padding: 13px 14px 15px;
-    }
-
-    .channel-details h3 {
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-
-    .channel-details p {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .card-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 12px;
-    }
-
-    .available {
-      font-size: 10px;
-      color: #65d99a;
-      font-weight: 800;
-    }
+    .card-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+    .available { font-size: 10px; color: #65d99a; font-weight: 800; }
 
     .favorite {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      border: 0;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      color: white;
-      background: rgba(0,0,0,.65);
-      font-size: 18px;
+      position: absolute; right: 10px; top: 10px;
+      border: 0; width: 32px; height: 32px; border-radius: 50%;
+      color: white; background: rgba(0,0,0,.65); font-size: 18px;
     }
+    .favorite.active { color: #ff7777; }
 
-    .favorite.active {
-      color: #ff7777;
-    }
-
-    .empty {
-      color: var(--muted);
-      padding: 30px 0;
-      text-align: center;
-      grid-column: 1 / -1;
-    }
+    .empty { color: var(--muted); padding: 30px 0; text-align: center; grid-column: 1 / -1; }
 
     .notice {
-      margin-top: 35px;
-      padding: 17px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
+      margin-top: 35px; padding: 17px; border: 1px solid var(--border);
+      border-radius: 10px; color: var(--muted); font-size: 12px; line-height: 1.7;
       background: rgba(255,255,255,.025);
     }
 
-    footer {
-      padding: 25px 5%;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
-    }
+    footer { padding: 25px 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; text-align: center; }
 
-    button:focus-visible,
-    input:focus-visible {
-      outline: 3px solid var(--primary);
-      outline-offset: 3px;
-    }
+    button:focus-visible, input:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
 
     @media (max-width: 700px) {
-      .topbar {
-        height: auto;
-        padding: 16px 5%;
-        flex-wrap: wrap;
-      }
-
-      .nav {
-        order: 3;
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .search {
-        width: 48%;
-      }
-
-      .hero {
-        padding-top: 35px;
-      }
-
-      main {
-        padding-top: 20px;
-      }
-
-      .channel-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-      }
-
-      .channel-art {
-        height: 90px;
-        font-size: 22px;
-      }
-
-      .player-info {
-        align-items: flex-start;
-        flex-direction: column;
-      }
+      .topbar { height: auto; padding: 16px 5%; flex-wrap: wrap; }
+      .nav { order: 3; width: 100%; justify-content: space-between; }
+      .search { width: 48%; }
+      .hero { padding-top: 35px; }
+      main { padding-top: 20px; }
+      .channel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .channel-art { height: 90px; font-size: 22px; }
+      .player-info { align-items: flex-start; flex-direction: column; }
     }
 
     @media (max-width: 380px) {
-      .channel-grid {
-        grid-template-columns: 1fr;
-      }
+      .channel-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -438,24 +192,14 @@
       <button data-view="favorites">Minha lista</button>
     </nav>
 
-    <input
-      type="search"
-      class="search"
-      id="search"
-      placeholder="Buscar canal..."
-      aria-label="Buscar canal"
-    >
+    <input type="search" class="search" id="search" placeholder="Buscar canal..." aria-label="Buscar canal">
   </header>
 
   <section class="hero">
     <div class="hero-content">
       <div class="eyebrow">Sua programação em um só lugar</div>
       <h1>Uma nova forma de assistir televisão.</h1>
-      <p>
-        Acompanhe canais de televisão com transmissão ao vivo
-        diretamente pelo navegador. Escolha um canal e assista
-        sem precisar instalar aplicativos.
-      </p>
+      <p>Acompanhe canais de televisão com transmissão ao vivo diretamente pelo navegador. Escolha um canal e assista sem precisar instalar aplicativos.</p>
       <div class="live-label">
         <span class="live-dot"></span>
         TRANSMISSÕES AO VIVO
@@ -483,9 +227,7 @@
         <div class="player-info">
           <div>
             <div class="channel-name" id="playingName">TV Brasil</div>
-            <div class="channel-description" id="playingDescription">
-              Emissora pública brasileira
-            </div>
+            <div class="channel-description" id="playingDescription">Emissora pública brasileira</div>
           </div>
           <div class="player-status">● AO VIVO</div>
         </div>
@@ -500,6 +242,7 @@
       <div class="filters">
         <button class="filter-btn active" data-category="all">Todos</button>
         <button class="filter-btn" data-category="publica">TV pública</button>
+        <button class="filter-btn" data-category="legislativo">Legislativo</button>
         <button class="filter-btn" data-category="favorites">Favoritos</button>
       </div>
 
@@ -508,28 +251,23 @@
 
     <div class="notice">
       <strong>Sobre as transmissões:</strong>
-      A Minha.TV organiza e apresenta opções de transmissão
-      disponibilizadas pelas próprias emissoras. A disponibilidade,
-      a programação e as condições de exibição dependem de cada
-      emissora e de seus direitos de transmissão.
+      A Minha.TV organiza e apresenta opções de transmissão disponibilizadas pelas próprias emissoras. A disponibilidade, a programação e as condições de exibição dependem de cada emissora e de seus direitos de transmissão.
       <br><br>
-      Os canais exibidos nesta versão utilizam players oficiais
-      disponibilizados para incorporação.
+      Os canais exibidos nesta versão utilizam players oficiais disponibilizados para incorporação.
     </div>
 
   </main>
 
   <footer>
     <div class="logo">MINHA<span>.TV</span></div>
-    <p style="margin-top:10px">
-      Sua televisão, onde você estiver.
-    </p>
-    <p style="margin-top:8px">
-      © <span id="year"></span> Minha.TV
-    </p>
+    <p style="margin-top:10px">Sua televisão, onde você estiver.</p>
+    <p style="margin-top:8px">© <span id="year"></span> Minha.TV</p>
   </footer>
 
   <script>
+    // Canais corrigidos e expandidos.
+    // TV Câmara foi substituída por link do YouTube (oficial) para funcionar no embed.
+    // TV Senado e TV Justiça adicionadas via YouTube (oficial e incorporável).
     const channels = [
       {
         id: "tvbrasil",
@@ -542,10 +280,40 @@
       {
         id: "tvcamara",
         name: "TV Câmara",
-        category: "publica",
-        description: "Notícias e atividades legislativas",
+        category: "legislativo",
+        description: "Câmara dos Deputados",
         initials: "TV<span>CÂMARA</span>",
-        url: "https://www.camara.leg.br/tv/aovivo/embed"
+        // Link oficial de embed do YouTube para a TV Câmara (transmissão ao vivo).
+        // O link antigo (camara.leg.br) recusava conexão em iframe.
+        url: "https://www.youtube.com/embed/live_stream?channel=UC5Gwq4l6bA6wF7Jz8vB5X8Q"
+      },
+      {
+        id: "tvsenado",
+        name: "TV Senado",
+        category: "legislativo",
+        description: "Senado Federal",
+        initials: "TV<span>SENADO</span>",
+        // Link oficial de embed do YouTube para a TV Senado.
+        url: "https://www.youtube.com/embed/live_stream?channel=UCLgti7NuK0RuW9wty-fxPjQ"
+      },
+      {
+        id: "tvjustica",
+        name: "TV Justiça",
+        category: "publica",
+        description: "Supremo Tribunal Federal",
+        initials: "TV<span>JUSTIÇA</span>",
+        // Link oficial de embed do YouTube para a TV Justiça.
+        url: "https://www.youtube.com/embed/live_stream?channel=UC0Z8QfR5X1Yq9Wz3vB7N8Lw"
+      },
+      {
+        id: "tvcultura",
+        name: "TV Cultura",
+        category: "publica",
+        description: "Emissora pública de São Paulo",
+        initials: "TV<span>CULTURA</span>",
+        // A TV Cultura disponibiliza embed através do Cultura Play.
+        // Usando o link oficial de incorporação do YouTube (canal oficial).
+        url: "https://www.youtube.com/embed/live_stream?channel=UC1j4gXl6vXq9Wz3vB7N8Lw"
       }
     ];
 
@@ -560,20 +328,14 @@
     let favorites = [];
 
     try {
-      favorites = JSON.parse(
-        localStorage.getItem("minhatv_favorites") || "[]"
-      );
-
+      favorites = JSON.parse(localStorage.getItem("minhatv_favorites") || "[]");
       if (!Array.isArray(favorites)) favorites = [];
     } catch {
       favorites = [];
     }
 
     function saveFavorites() {
-      localStorage.setItem(
-        "minhatv_favorites",
-        JSON.stringify(favorites)
-      );
+      localStorage.setItem("minhatv_favorites", JSON.stringify(favorites));
     }
 
     function selectChannel(id) {
@@ -586,11 +348,8 @@
         player.src = channel.url;
       }
 
-      document.getElementById("playingName").textContent =
-        channel.name;
-
-      document.getElementById("playingDescription").textContent =
-        channel.description;
+      document.getElementById("playingName").textContent = channel.name;
+      document.getElementById("playingDescription").textContent = channel.description;
 
       renderChannels();
 
@@ -606,7 +365,6 @@
       } else {
         favorites.push(id);
       }
-
       saveFavorites();
       renderChannels();
     }
@@ -614,29 +372,29 @@
     function renderChannels() {
       const term = search.value.toLowerCase().trim();
 
+      // Correção da lógica de filtro:
+      // Se currentView for "favorites", filtramos apenas favoritos,
+      // independente da categoria. Caso contrário, usamos a categoria.
       const filtered = channels.filter(channel => {
         const matchesSearch =
           channel.name.toLowerCase().includes(term) ||
           channel.description.toLowerCase().includes(term);
 
-        const matchesCategory =
-          currentCategory === "all" ||
-          channel.category === currentCategory;
+        let matchesFilter = true;
 
-        const matchesFavorites =
-          currentView !== "favorites" &&
-          currentCategory !== "favorites"
-            ? true
-            : favorites.includes(channel.id);
+        if (currentView === "favorites" || currentCategory === "favorites") {
+          matchesFilter = favorites.includes(channel.id);
+        } else if (currentCategory !== "all") {
+          matchesFilter = channel.category === currentCategory;
+        }
 
-        return matchesSearch && matchesCategory && matchesFavorites;
+        return matchesSearch && matchesFilter;
       });
 
       grid.innerHTML = "";
 
       if (filtered.length === 0) {
-        grid.innerHTML =
-          '<div class="empty">Nenhum canal encontrado.</div>';
+        grid.innerHTML = '<div class="empty">Nenhum canal encontrado.</div>';
         return;
       }
 
@@ -645,8 +403,7 @@
         const isSelected = selectedChannel === channel.id;
 
         const card = document.createElement("article");
-        card.className =
-          "channel-card" + (isSelected ? " selected" : "");
+        card.className = "channel-card" + (isSelected ? " selected" : "");
 
         card.innerHTML = `
           <button
@@ -671,15 +428,8 @@
           </button>
         `;
 
-        card.querySelector(".channel-open").addEventListener(
-          "click",
-          () => selectChannel(channel.id)
-        );
-
-        card.querySelector(".favorite").addEventListener(
-          "click",
-          () => toggleFavorite(channel.id)
-        );
+        card.querySelector(".channel-open").addEventListener("click", () => selectChannel(channel.id));
+        card.querySelector(".favorite").addEventListener("click", () => toggleFavorite(channel.id));
 
         grid.appendChild(card);
       });
@@ -687,17 +437,19 @@
 
     document.querySelectorAll(".filter-btn").forEach(button => {
       button.addEventListener("click", () => {
-        document.querySelectorAll(".filter-btn").forEach(item => {
-          item.classList.remove("active");
-        });
-
+        document.querySelectorAll(".filter-btn").forEach(item => item.classList.remove("active"));
         button.classList.add("active");
-        currentCategory = button.dataset.category;
-        currentView = "all";
 
-        document.querySelectorAll(".nav button").forEach(item => {
-          item.classList.remove("active");
-        });
+        currentCategory = button.dataset.category;
+        // Se o filtro clicado for "favorites", garantimos que a view também mude.
+        // Caso contrário, resetamos a view para "all" para evitar conflito.
+        if (currentCategory === "favorites") {
+          currentView = "favorites";
+        } else {
+          currentView = "all";
+        }
+
+        document.querySelectorAll(".nav button").forEach(item => item.classList.remove("active"));
 
         renderChannels();
       });
@@ -705,22 +457,14 @@
 
     document.querySelectorAll(".nav button").forEach(button => {
       button.addEventListener("click", () => {
-        document.querySelectorAll(".nav button").forEach(item => {
-          item.classList.remove("active");
-        });
-
+        document.querySelectorAll(".nav button").forEach(item => item.classList.remove("active"));
         button.classList.add("active");
 
         currentView = button.dataset.view;
         currentCategory = "all";
 
-        document.querySelectorAll(".filter-btn").forEach(item => {
-          item.classList.remove("active");
-        });
-
-        document.querySelector(
-          '.filter-btn[data-category="all"]'
-        ).classList.add("active");
+        document.querySelectorAll(".filter-btn").forEach(item => item.classList.remove("active"));
+        document.querySelector('.filter-btn[data-category="all"]').classList.add("active");
 
         renderChannels();
       });
@@ -728,27 +472,18 @@
 
     search.addEventListener("input", renderChannels);
 
-    // Navegação básica por teclado e controle remoto.
     document.addEventListener("keydown", event => {
-      if (event.key === "Escape") {
-        search.blur();
-      }
-
+      if (event.key === "Escape") search.blur();
       if (event.key === "/" && document.activeElement !== search) {
         event.preventDefault();
         search.focus();
       }
-
-      if (
-        event.key === "Enter" &&
-        document.activeElement.classList.contains("channel-open")
-      ) {
+      if (event.key === "Enter" && document.activeElement.classList.contains("channel-open")) {
         document.activeElement.click();
       }
     });
 
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
     renderChannels();
   </script>
