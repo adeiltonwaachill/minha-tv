@@ -1,8 +1,14 @@
 // =====================================================================
 // 1. CONFIGURAÇÕES E SEGURANÇA
 // =====================================================================
-const PLAYLIST_URL = 'https://github.com/iptv-com/iptv/raw/refs/heads/main/lists/brazil.m3u';
-const ADULT_PASSWORD = "1234"; // Senha para liberar conteúdo restrito
+// Lista de fontes para tentar carregar os canais (Fallback)
+const PLAYLISTS = [
+  'https://iptv-org.github.io/iptv/countries/br.m3u',
+  'https://raw.githubusercontent.com/iptv-com/iptv/main/lists/brazil.m3u'
+];
+
+// SENHA PARA O CONTEÚDO RESTRITO
+const ADULT_PASSWORD = "9812"; 
 let isAdultUnlocked = false;
 
 // =====================================================================
@@ -41,7 +47,7 @@ const PREMIUM_MOVIE_CHANNELS = [
 ];
 
 // =====================================================================
-// 4. INFANTIL (LINKS GARANTIDOS)
+// 4. INFANTIL E GOSPEL (LINKS GARANTIDOS)
 // =====================================================================
 const KIDS_CHANNELS = [
   { name: "Disney Channel", logo: "", url: "https://playplusdisney-lh.akamaihd.net/i/pp_dsneych@376337/index_720_av-p.m3u8" },
@@ -52,9 +58,6 @@ const KIDS_CHANNELS = [
   { name: "Nickelodeon", logo: "", url: "http://pdsrv.io:25461/live/rafael1234/rafael1234/7537.m3u8" }
 ];
 
-// =====================================================================
-// 5. GOSPEL (LINKS GARANTIDOS)
-// =====================================================================
 const GOSPEL_CHANNELS = [
   { name: "TV Evangelizar", logo: "", url: "http://tvevangelizar20.crossdigital.com.br:1935/evangelizar/tv/playlist.m3u8" },
   { name: "Portal Gospel", logo: "", url: "http://s1.wsepanel.com:1935/lukfilm/lukfilm/playlist.m3u8" },
@@ -64,7 +67,7 @@ const GOSPEL_CHANNELS = [
 ];
 
 // =====================================================================
-// 6. ELEMENTOS DO HTML
+// 5. ELEMENTOS DO HTML
 // =====================================================================
 const video = document.getElementById('videoPlayer');
 const videoWrapper = document.getElementById('videoWrapper');
@@ -78,7 +81,7 @@ let currentCategory = 'Todos';
 let hls = null;
 
 // =====================================================================
-// 7. FUNÇÕES DE APOIO
+// 6. FUNÇÕES DE APOIO
 // =====================================================================
 function cleanChannelName(name) {
   return name.replace(/Ⓨ/g, '').replace(/\(.*?\)/g, '').replace(/\[.*?\]/g, '').replace(/HD|SD|FHD/gi, '').trim();
@@ -123,7 +126,7 @@ function parseM3U(text) {
 }
 
 // =====================================================================
-// 8. CONTROLE PARENTAL
+// 7. CONTROLE PARENTAL
 // =====================================================================
 function setupParentalControl() {
   const btnAdult = document.createElement('button');
@@ -161,17 +164,39 @@ function setupParentalControl() {
 }
 
 // =====================================================================
-// 9. CARREGAMENTO INICIAL
+// 8. CARREGAMENTO INICIAL (COM TESTE DE FONTES)
 // =====================================================================
 async function init() {
-  grid.innerHTML = '<div class="empty-state">Baixando lista base do Brasil...</div>';
+  grid.innerHTML = '<div class="empty-state">Baixando lista de canais...</div>';
   
+  let text = null;
+
+  for (const url of PLAYLISTS) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        text = await response.text();
+        if (text.includes('#EXTM3U') || text.includes('#EXTINF')) {
+          console.log(`Lista carregada com sucesso de: ${url}`);
+          break;
+        } else {
+          text = null;
+        }
+      }
+    } catch (e) {
+      console.warn(`Falha ao tentar ${url}:`, e);
+    }
+  }
+
+  if (!text) {
+    grid.innerHTML = '<div class="empty-state">Não foi possível carregar nenhuma lista. Verifique sua conexão.</div>';
+    return;
+  }
+
   try {
-    const response = await fetch(PLAYLIST_URL);
-    const text = await response.text();
     allChannels = parseM3U(text);
     
-    // Adiciona os canais fixos (Infantil e Gospel)
+    // Adiciona os canais fixos
     KIDS_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Infantil' }));
     GOSPEL_CHANNELS.forEach(ch => allChannels.push({ ...ch, group: 'Gospel' }));
     
@@ -187,12 +212,12 @@ async function init() {
     renderGrid();
   } catch (e) {
     console.error(e);
-    grid.innerHTML = '<div class="empty-state">Erro ao carregar a lista. Verifique sua conexão.</div>';
+    grid.innerHTML = '<div class="empty-state">Erro ao processar a lista de canais.</div>';
   }
 }
 
 // =====================================================================
-// 10. FILTROS E GRID
+// 9. FILTROS E GRID
 // =====================================================================
 function generateFilters() {
   const categories = new Set();
@@ -268,7 +293,7 @@ function renderGrid() {
 }
 
 // =====================================================================
-// 11. PLAYER
+// 10. PLAYER
 // =====================================================================
 function playChannel(channel, cardElement) {
   if ((channel.group === 'Adulto' || channel.group === 'Filmes Fechados') && !isAdultUnlocked) {
@@ -357,7 +382,7 @@ function playChannel(channel, cardElement) {
 }
 
 // =====================================================================
-// 12. EVENTOS
+// 11. EVENTOS
 // =====================================================================
 searchInput.addEventListener('input', renderGrid);
 init();
