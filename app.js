@@ -1,25 +1,58 @@
 // =====================================================================
-// CONFIGURAÇÃO DA LISTA GLOBAL (IPTV-ORG)
+// SUA LISTA M3U (Embutida para facilitar)
 // =====================================================================
-// Lista principal com TODOS os canais do mundo (aprox. 10.000)
-const GLOBAL_M3U_URL = 'https://iptv-org.github.io/iptv/index.m3u';
+const M3U_DATA = `#EXTM3U x-tvg-url="https://epgshare01.online/epgshare01/epg_ripper_AL1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_ALJAZEERA1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_ALL_SOURCES1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_AR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_ASIANTELEVISION1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_AT1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_AU1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_BA1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_BE2.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_BEIN1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_BG1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_BR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_CA1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_CH1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_CL1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_CO1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_CR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_CY1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_CZ1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_DE1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_DELUXEMUSIC1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_DIRECTVSPORTS1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_DISTROTV1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_DK1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_DO1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_DRAFTKINGS1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_DUMMY_CHANNELS.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_EC1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_EG1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_ES1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_FANDUEL1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_FI1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_FR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_GR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_HK1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_HR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_HU1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_ID1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_IE1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_IL1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_IN1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_IN4.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_IT1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_JM1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_JP1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_JP2.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_KE1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_KR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_LT1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_LV1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_MT1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_MX1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_MY1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_NG1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_NL1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_NO1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_NZ1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PA1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PAC-12.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PE1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PH1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PH2.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PK1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PL1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PLEX1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_POWERNATION1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_PT1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN_DE1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN_EN1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN_ES1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN_FR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN_IT1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN_NL1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RAKUTEN_PL1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RALLY_TV1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RO1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RO2.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_RS1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_SA1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_SA2.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_SE1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_SG1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_SK1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_SPORTKLUB1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_SSPORTPLUS1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_SV1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_TBNPLUS1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_THESPORTPLUS1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_TR1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_TR3.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_UK1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_US1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_US_LOCALS2.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_US_SPORTS1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_UY1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_VN1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_VOA1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_ZA1.xml.gz, https://epgshare01.online/epgshare01/epg_ripper_viva-russia.ru.xml.gz, https://epgshare01.online/epgshare01/locomotiontv.xml.gz"
+#EXTINF:-1 tvg-name="COM Brasil" tvg-logo="https://i.imgur.com/c8ztQnF.png" tvg-id="COMBrasil.br" tvg-chno="1" tvg-country="BR" group-title="Brazil",COM Brasil
+https://br5093.streamingdevideo.com.br/abc/abc/playlist.m3u8
+#EXTINF:-1 tvg-name="SBT" tvg-logo="https://logodownload.org/wp-content/uploads/2013/12/sbt-logo.png" tvg-id="SBTNacional.br" tvg-chno="2" tvg-country="BR" group-title="Brazil",SBT Ⓨ
+https://www.youtube.com/watch?v=ABVQXgr2LW4
+#EXTINF:-1 tvg-name="AgroBrasil TV" tvg-logo="https://upload.wikimedia.org/wikipedia/pt/6/60/Logo_AgroBrasilTV.jpg" tvg-id="AgroBrasilTV.br" tvg-chno="3" tvg-country="BR" group-title="Brazil",AgroBrasil TV
+http://45.162.230.234:1935/agrobrasiltv/agrobrasiltv/playlist.m3u8
+#EXTINF:-1 tvg-name="Futura" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/c/ce/Canal_Futura_2022.svg" tvg-id="CanalFutura.br" tvg-chno="4" tvg-country="BR" group-title="Brazil",Futura
+http://168.197.104.22/FUTURA/index.m3u8
+#EXTINF:-1 tvg-name="RBC" tvg-logo="https://portal.rbc1.com.br/public/portal/img/layout/logorbc.png" tvg-id="RBC.br" tvg-chno="5" tvg-country="BR" group-title="Brazil",RBC Ⓨ
+https://www.youtube.com/watch?v=oUdd3CsxYaE
+#EXTINF:-1 tvg-name="Record News" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/4/46/Record_News_logo_2023.svg" tvg-id="RecordNews.br" tvg-chno="7" tvg-country="BR" group-title="Brazil",Record News
+https://rnw-rn.otteravision.com/rnw/rn/rnw_rn.m3u8
+#EXTINF:-1 tvg-name="ISTV" tvg-logo="https://upload.wikimedia.org/wikipedia/pt/b/b5/Logotipo_da_ISTV.png" tvg-id="ISTVHD.br" tvg-chno="8" tvg-country="BR" group-title="Brazil",ISTV
+https://video08.logicahost.com.br/istvnacional/srt.stream/istvnacional.m3u8
+#EXTINF:-1 tvg-name="Rede Brasil" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/d1/Marca_rede_brasil_rgb-color.png" tvg-id="RedeBrasil.br" tvg-chno="9" tvg-country="BR" group-title="Brazil",Rede Brasil
+https://video09.logicahost.com.br/redebrasiloficial/redebrasiloficial/playlist.m3u8
+#EXTINF:-1 tvg-name="TV Câmara" tvg-logo="https://i.imgur.com/UpV2PRk.png" tvg-id="TVCamara.br" tvg-chno="10" tvg-country="BR" group-title="Brazil",TV Câmara
+https://stream3.camara.gov.br/tv1/manifest.m3u8
+#EXTINF:-1 tvg-name="TVE RS" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/c/c2/Logotipo_da_TVE_RS.png" tvg-id="TVERS.br" tvg-chno="11" tvg-country="BR" group-title="Brazil",TVE RS
+http://streaming.procergs.com.br:1935/tve/stve/playlist.m3u8
+#EXTINF:-1 tvg-name="TV Cultura" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/82/Cultura_logo_2013.svg" tvg-id="TVCultura.br" tvg-chno="12" tvg-country="BR" group-title="Brazil",TV Cultura
+https://player-tvcultura.stream.uol.com.br/live/tvcultura.m3u8`;
 
-let allChannels = [];      // Todos os canais parseados
-let filteredChannels = []; // Canais após filtro de busca/categoria
-let renderedCount = 0;     // Controle de scroll infinito
-const BATCH_SIZE = 100;    // Quantos canais carregar por vez na tela
-
+// =====================================================================
+// CONFIGURAÇÕES E VARIÁVEIS
+// =====================================================================
 const video = document.getElementById('videoPlayer');
 const videoWrapper = document.getElementById('videoWrapper');
 const grid = document.getElementById('channelGrid');
 const searchInput = document.getElementById('search');
 const statusBadge = document.getElementById('playerStatus');
 const filtersContainer = document.getElementById('filtersContainer');
+
+let allChannels = [];
+let currentCategory = 'Todos';
 let hls = null;
 
 // =====================================================================
-// PARSER DE M3U (EXTRAI NOME, LOGO, GRUPO E URL)
+// FUNÇÕES DE APOIO
 // =====================================================================
+// Limpa o nome do canal (remove Ⓨ, (1080p), etc)
+function cleanChannelName(name) {
+  return name
+    .replace(/Ⓨ/g, '')
+    .replace(/\(.*?\)/g, '')
+    .replace(/\[.*?\]/g, '')
+    .replace(/HD|SD|FHD/gi, '')
+    .trim();
+}
+
+// Lê a string M3U e transforma em um array de objetos
 function parseM3U(text) {
   const lines = text.split('\n');
   const channels = [];
@@ -28,29 +61,26 @@ function parseM3U(text) {
   for (let line of lines) {
     line = line.trim();
     if (line.startsWith('#EXTINF:')) {
-      // Extrai o nome (tudo depois da última vírgula)
+      // Extrai nome
       const nameMatch = line.match(/,(.+)$/);
-      let name = nameMatch ? nameMatch[1].trim() : 'Canal Desconhecido';
-      
-      // Limpa o nome (remove lixo técnico)
-      name = name.replace(/Ⓨ/g, '').replace(/\(.*?\)/g, '').replace(/\[.*?\]/g, '').trim();
+      let name = nameMatch ? nameMatch[1].trim() : 'Desconhecido';
+      name = cleanChannelName(name);
 
-      // Extrai o grupo/categoria
-      const groupMatch = line.match(/group-title="([^"]+)"/);
-      let group = groupMatch ? groupMatch[1] : 'Geral';
-      // Limpa o grupo
-      group = group.replace(/;.*$/, ''); // Pega apenas a primeira categoria
-
-      // Extrai a logo
+      // Extrai logo
       const logoMatch = line.match(/tvg-logo="([^"]+)"/);
       const logo = logoMatch ? logoMatch[1] : '';
 
-      currentInfo = { name, group, logo };
+      // Extrai grupo (categoria)
+      const groupMatch = line.match(/group-title="([^"]+)"/);
+      let group = groupMatch ? groupMatch[1] : 'Geral';
+      // Se o grupo for "Brazil", renomeia para "Geral" ou "Brasil"
+      if (group === 'Brazil' || group === 'BR') group = 'Brasil';
+
+      currentInfo = { name, logo, group };
     } else if (line && !line.startsWith('#') && currentInfo) {
-      // URL do stream
       const url = line;
-      // Filtro básico: só aceita links http/https e que pareçam vídeo ou youtube
-      if (url.startsWith('http') || url.includes('youtube.com') || url.includes('youtu.be')) {
+      // Só adiciona se for um link válido
+      if (url.startsWith('http')) {
         channels.push({ ...currentInfo, url });
       }
       currentInfo = null;
@@ -60,105 +90,67 @@ function parseM3U(text) {
 }
 
 // =====================================================================
-// CARREGAMENTO INICIAL
+// INICIALIZAÇÃO
 // =====================================================================
-async function loadGlobalChannels() {
-  try {
-    grid.innerHTML = '<div class="empty-state">Baixando lista global (10.000 canais)... Isso pode levar alguns segundos.</div>';
-    
-    const response = await fetch(GLOBAL_M3U_URL);
-    if (!response.ok) throw new Error('Falha ao baixar lista');
-    
-    const text = await response.text();
-    let parsed = parseM3U(text);
+function init() {
+  // Converte a string M3U em objetos
+  allChannels = parseM3U(M3U_DATA);
+  console.log(`Canais carregados da sua lista: ${allChannels.length}`);
 
-    // Filtra duplicados por URL e canais sem nome válido
-    const unique = new Map();
-    parsed.forEach(ch => {
-      if (ch.name && ch.name !== 'Canal Desconhecido' && ch.url && !unique.has(ch.url)) {
-        unique.set(ch.url, ch);
-      }
-    });
-    
-    // Converte de volta para array e ordena (Brasil primeiro, depois alfabético)
-    allChannels = Array.from(unique.values());
-    
-    // Tenta identificar canais brasileiros pela URL ou nome para dar prioridade
-    allChannels.sort((a, b) => {
-      const aIsBr = a.name.includes('BR') || a.url.includes('.br') || a.group.includes('Brazil');
-      const bIsBr = b.name.includes('BR') || b.url.includes('.br') || b.group.includes('Brazil');
-      if (aIsBr && !bIsBr) return -1;
-      if (!aIsBr && bIsBr) return 1;
-      return a.name.localeCompare(b.name);
-    });
-
-    console.log(`Total de canais carregados: ${allChannels.length}`);
-
-    generateFilters();
-    applyFilters(); // Aplica filtros iniciais e renderiza
-
-  } catch (e) {
-    console.error(e);
-    grid.innerHTML = '<div class="empty-state">Erro ao carregar a lista global. Verifique sua conexão.</div>';
-  }
+  generateFilters();
+  renderGrid();
 }
 
 // =====================================================================
-// FILTROS E RENDERIZAÇÃO (COM SCROLL INFINITO)
+// GERAR FILTROS (CATEGORIAS)
 // =====================================================================
 function generateFilters() {
-  // Coleta categorias únicas (limitando a 20 para não poluir)
   const categories = new Set();
   allChannels.forEach(ch => {
-    if (ch.group && ch.group !== 'Undefined' && ch.group !== 'General') {
-      categories.add(ch.group);
-    }
+    if (ch.group) categories.add(ch.group);
   });
-  
-  const sortedCategories = Array.from(categories).sort().slice(0, 20);
+
+  // Converte para array e ordena
+  const sortedCategories = Array.from(categories).sort();
 
   filtersContainer.innerHTML = '<button class="filter-btn active" data-category="Todos">Todos</button>';
-  
+
   sortedCategories.forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'filter-btn';
     btn.dataset.category = cat;
     btn.textContent = cat;
+    
     btn.onclick = () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      applyFilters(cat);
+      currentCategory = cat;
+      renderGrid();
     };
     filtersContainer.appendChild(btn);
   });
 }
 
-function applyFilters(category = 'Todos') {
+// =====================================================================
+// RENDERIZAR O GRID
+// =====================================================================
+function renderGrid() {
   const term = searchInput.value.toLowerCase().trim();
   
-  filteredChannels = allChannels.filter(ch => {
+  const filtered = allChannels.filter(ch => {
     const matchesSearch = ch.name.toLowerCase().includes(term);
-    const matchesCategory = category === 'Todos' || ch.group === category;
+    const matchesCategory = currentCategory === 'Todos' || ch.group === currentCategory;
     return matchesSearch && matchesCategory;
   });
 
-  // Reseta a renderização
-  renderedCount = 0;
   grid.innerHTML = '';
-  
-  if (filteredChannels.length === 0) {
+
+  if (filtered.length === 0) {
     grid.innerHTML = '<div class="empty-state">Nenhum canal encontrado.</div>';
     return;
   }
 
-  // Renderiza o primeiro lote
-  renderNextBatch();
-}
-
-function renderNextBatch() {
-  const batch = filteredChannels.slice(renderedCount, renderedCount + BATCH_SIZE);
-  
-  batch.forEach(ch => {
+  filtered.forEach(ch => {
     const card = document.createElement('div');
     card.className = 'channel-card';
     
@@ -184,27 +176,10 @@ function renderNextBatch() {
     card.onclick = () => playChannel(ch, card);
     grid.appendChild(card);
   });
-
-  renderedCount += batch.length;
-
-  // Adiciona um botão "Carregar mais" se ainda houver canais
-  if (renderedCount < filteredChannels.length) {
-    const moreBtn = document.createElement('button');
-    moreBtn.className = 'filter-btn';
-    moreBtn.style.margin = '20px auto';
-    moreBtn.style.display = 'block';
-    moreBtn.style.width = '200px';
-    moreBtn.textContent = `Carregar mais (${filteredChannels.length - renderedCount} restantes)`;
-    moreBtn.onclick = () => {
-      moreBtn.remove();
-      renderNextBatch();
-    };
-    grid.appendChild(moreBtn);
-  }
 }
 
 // =====================================================================
-// LÓGICA DE PLAYER (MANTIDA)
+// TOCAR O CANAL (PLAYER)
 // =====================================================================
 function playChannel(channel, cardElement) {
   document.getElementById('playingName').textContent = channel.name;
@@ -221,7 +196,7 @@ function playChannel(channel, cardElement) {
   if (hls) { hls.destroy(); hls = null; }
   videoWrapper.innerHTML = '';
 
-  // YouTube
+  // Se for YouTube (como o SBT da sua lista)
   if (channel.url.includes('youtube.com') || channel.url.includes('youtu.be')) {
     let videoId = '';
     if (channel.url.includes('watch?v=')) videoId = channel.url.split('watch?v=')[1].split('&')[0];
@@ -243,7 +218,7 @@ function playChannel(channel, cardElement) {
     }
   }
 
-  // HLS (m3u8)
+  // Se for HLS (.m3u8)
   const newVideo = document.createElement('video');
   newVideo.controls = true;
   newVideo.autoplay = true;
@@ -271,6 +246,7 @@ function playChannel(channel, cardElement) {
     hls.on(Hls.Events.ERROR, (event, data) => {
       if (data.fatal) {
         statusBadge.innerHTML = '<span class="status-dot" style="background:#ff4d4d"></span> OFFLINE';
+        statusBadge.style.background = 'rgba(255, 77, 77, 0.1)';
         if (cardElement) {
           const statusEl = cardElement.querySelector('.card-status');
           if (statusEl) { statusEl.className = 'card-status status-offline'; statusEl.textContent = 'OFF'; }
@@ -301,12 +277,7 @@ function playChannel(channel, cardElement) {
 // =====================================================================
 // EVENTOS
 // =====================================================================
-searchInput.addEventListener('input', () => {
-  // Ao digitar, aplica o filtro da categoria ativa
-  const activeBtn = document.querySelector('.filter-btn.active');
-  const cat = activeBtn ? activeBtn.dataset.category : 'Todos';
-  applyFilters(cat);
-});
+searchInput.addEventListener('input', renderGrid);
 
 // Inicia
-loadGlobalChannels();
+init();
