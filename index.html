@@ -5,259 +5,146 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#071321">
-<title>Minha.TV - Sua televisão online</title>
-
+<title>Minha.TV - Televisão online</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- background:#071321;
- color:#fff;
- font-family:Arial,sans-serif;
-}
-header{
- padding:22px 5%;
- display:flex;
- justify-content:space-between;
- align-items:center;
- background:#102238;
-}
-.logo{font-size:30px;font-weight:bold}
-.logo span{color:#f29b38}
-main{padding:30px 5%}
-h1{font-size:32px}
+body{margin:0;background:#071321;color:#fff;font-family:Arial,sans-serif}
+header{padding:20px 5%;background:#102238;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:30px;font-weight:bold}.logo span{color:#f29b38}
+main{padding:28px 5%}
+h1{font-size:30px;margin-bottom:8px}
 .muted{color:#a9bbce}
-nav{
- display:flex;
- gap:10px;
- flex-wrap:wrap;
- margin:25px 0;
-}
-button{
- background:#173653;
- color:white;
- border:1px solid #ffffff30;
- padding:13px 18px;
- border-radius:10px;
- cursor:pointer;
- font-size:15px;
-}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin:24px 0}
+button{cursor:pointer;color:white;background:#173653;border:1px solid #ffffff25;padding:12px 17px;border-radius:10px;font-size:15px}
 button:focus{outline:3px solid #f29b38}
 button.active{background:#2585e8}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
- gap:16px;
-}
-.channel{
- text-align:left;
- min-height:135px;
- padding:18px;
- background:linear-gradient(145deg,#173653,#102238);
- border-radius:14px;
-}
-.channel .symbol{
- display:block;
- font-size:34px;
- margin-bottom:12px;
-}
-.channel strong{font-size:18px}
-.channel small{
- display:block;
- color:#a9bbce;
- margin-top:8px;
-}
-.player{
- display:none;
- margin-top:30px;
- background:#000;
- border-radius:15px;
- overflow:hidden;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:15px}
+.channel{text-align:left;padding:18px;min-height:140px;background:linear-gradient(145deg,#173653,#102238);border-radius:14px}
+.symbol{font-size:32px;display:block;margin-bottom:13px}
+.channel strong{font-size:18px;display:block}
+.channel small{color:#a9bbce;display:block;margin-top:8px}
+.player{display:none;margin-top:28px;background:#000;border-radius:14px;overflow:hidden}
 .player.show{display:block}
-.player-head{
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:14px;
- background:#102238;
-}
-video{
- display:block;
- width:100%;
- max-height:70vh;
- background:#000;
-}
-.status{
- padding:12px 16px;
- color:#ffd18a;
- background:#17283b;
-}
-.info{
- margin-top:25px;
- padding:18px;
- border-radius:12px;
- background:#102238;
- color:#b9c9d8;
- line-height:1.6;
-}
-footer{
- padding:25px 5%;
- color:#a9bbce;
-}
-@media(max-width:600px){
- h1{font-size:26px}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .channel{padding:13px}
-}
+.player-head{display:flex;justify-content:space-between;align-items:center;padding:14px;background:#102238}
+.screen{width:100%;aspect-ratio:16/9;background:#000}
+.screen iframe{width:100%;height:100%;border:0}
+.status{padding:12px;background:#17283b;color:#c6d8e9;font-size:14px}
+.info{margin-top:25px;padding:18px;background:#102238;border-radius:12px;color:#bdcddd;line-height:1.6}
+footer{padding:25px 5%;color:#a9bbce}
+@media(max-width:600px){h1{font-size:25px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.channel{padding:13px}}
 </style>
 </head>
-
 <body>
-
 <header>
  <div class="logo">MINHA<span>.TV</span></div>
- <div>TV online</div>
+ <span>Ao vivo</span>
 </header>
 
 <main>
-
 <h1>Sua televisão online</h1>
-<p class="muted">Escolha uma categoria e selecione o que deseja assistir.</p>
+<p class="muted">Escolha um canal para assistir.</p>
 
 <nav>
  <button class="active" data-filter="todos">Todos</button>
- <button data-filter="aberta">TV aberta</button>
- <button data-filter="noticias">Notícias</button>
+ <button data-filter="publico">TV pública</button>
  <button data-filter="religioso">Religiosos</button>
- <button data-filter="infantil">Infantil</button>
- <button data-filter="demo">Demonstração</button>
 </nav>
 
 <section class="grid">
 
-<button class="channel" data-cat="demo" id="demo">
- <span class="symbol">▶️</span>
- <strong>Canal de demonstração</strong>
- <small>Vídeo em movimento</small>
+<button class="channel" data-cat="publico"
+ data-url="https://www.camara.leg.br/tv/aovivo/embed"
+ data-name="TV Câmara" data-type="embed">
+ <span class="symbol">🏛️</span>
+ <strong>TV Câmara</strong>
+ <small>Transmissão oficial ao vivo</small>
 </button>
 
-<button class="channel" data-cat="aberta">
+<button class="channel" data-cat="religioso"
+ data-url="https://www.novotempo.com/tv/"
+ data-name="TV Novo Tempo" data-type="external">
  <span class="symbol">📺</span>
- <strong>TV aberta</strong>
- <small>Em breve</small>
+ <strong>TV Novo Tempo</strong>
+ <small>Assistir transmissão oficial</small>
 </button>
 
-<button class="channel" data-cat="noticias">
- <span class="symbol">📰</span>
- <strong>Notícias</strong>
- <small>Em breve</small>
-</button>
-
-<button class="channel" data-cat="religioso">
+<button class="channel" data-cat="religioso"
+ data-url="https://tv.cancaonova.com/TV-AO-VIVO/"
+ data-name="TV Canção Nova" data-type="external">
  <span class="symbol">✝️</span>
- <strong>Religiosos</strong>
- <small>Em breve</small>
-</button>
-
-<button class="channel" data-cat="infantil">
- <span class="symbol">🧸</span>
- <strong>Infantil</strong>
- <small>Em breve</small>
+ <strong>TV Canção Nova</strong>
+ <small>Assistir transmissão oficial</small>
 </button>
 
 </section>
 
 <section class="player" id="player">
-
  <div class="player-head">
-  <strong id="videoTitle">Canal de demonstração</strong>
+  <strong id="channelName">Canal</strong>
   <button id="close">Fechar</button>
  </div>
-
- <video id="video"
-  controls
-  playsinline
-  muted
-  preload="metadata"
-  poster="https://interactive-examples.mdn.mozilla.net/media/examples/flower.jpg">
-
-  <source
-   src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-   type="video/mp4">
-
-  <source
-   src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm"
-   type="video/webm">
-
-  Seu navegador não conseguiu reproduzir este vídeo.
- </video>
-
+ <div class="screen" id="screen"></div>
  <div class="status" id="status">
-  Preparando vídeo de demonstração...
+  Carregando transmissão...
  </div>
-
 </section>
 
 <div class="info">
- <strong>Bem-vindo à Minha.TV</strong><br>
- Esta é uma versão de demonstração da plataforma.
- O canal de teste apresenta um vídeo público de flores
- para verificar o funcionamento do player.
-
- Os canais de televisão serão adicionados posteriormente
- com transmissões oficiais e autorizadas.
+ <strong>Minha.TV</strong><br>
+ Plataforma independente de acesso a transmissões oficiais.
+ A disponibilidade e a reprodução dependem da emissora,
+ da conexão e da compatibilidade do dispositivo.
 </div>
-
 </main>
 
-<footer>
- MINHA.TV — Plataforma independente de televisão online.
-</footer>
+<footer>MINHA.TV — Sua televisão online.</footer>
 
 <script>
-const video = document.getElementById("video");
-const player = document.getElementById("player");
-const statusText = document.getElementById("status");
+const player=document.getElementById("player");
+const screen=document.getElementById("screen");
+const statusText=document.getElementById("status");
 
-document.getElementById("demo").addEventListener("click",()=>{
- player.classList.add("show");
- statusText.textContent="Carregando vídeo...";
- player.scrollIntoView({behavior:"smooth",block:"nearest"});
+document.querySelectorAll(".channel").forEach(channel=>{
+ channel.addEventListener("click",()=>{
+  const url=channel.dataset.url;
+  const type=channel.dataset.type;
 
- video.load();
+  if(type==="external"){
+   window.open(url,"_blank","noopener");
+   return;
+  }
 
- video.play().then(()=>{
-   statusText.textContent="Vídeo em reprodução. Ative o som nos controles se desejar.";
- }).catch(()=>{
-   statusText.textContent="Clique no botão de reproduzir para iniciar o vídeo.";
+  document.getElementById("channelName").textContent=
+   channel.dataset.name;
+
+  screen.innerHTML="";
+
+  const iframe=document.createElement("iframe");
+  iframe.src=url;
+  iframe.title=channel.dataset.name;
+  iframe.allow="autoplay; fullscreen; picture-in-picture";
+  iframe.allowFullscreen=true;
+
+  screen.appendChild(iframe);
+  statusText.textContent=
+   "Transmissão oficial. Se não carregar, tente abrir no site da emissora.";
+
+  player.classList.add("show");
+  player.scrollIntoView({behavior:"smooth",block:"nearest"});
  });
 });
 
-video.addEventListener("playing",()=>{
- statusText.textContent="Vídeo em reprodução.";
-});
-
-video.addEventListener("waiting",()=>{
- statusText.textContent="Carregando vídeo...";
-});
-
-video.addEventListener("error",()=>{
- statusText.textContent="Não foi possível carregar o vídeo. Verifique sua conexão ou tente outro navegador.";
-});
-
 document.getElementById("close").addEventListener("click",()=>{
- video.pause();
- video.removeAttribute("src");
- video.querySelectorAll("source").forEach(s=>s.remove());
+ screen.innerHTML="";
  player.classList.remove("show");
 });
 
 document.querySelectorAll("nav button").forEach(button=>{
  button.addEventListener("click",()=>{
-  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
+  document.querySelectorAll("nav button")
+   .forEach(b=>b.classList.remove("active"));
 
+  button.classList.add("active");
   const filter=button.dataset.filter;
 
   document.querySelectorAll(".channel").forEach(channel=>{
@@ -267,6 +154,5 @@ document.querySelectorAll("nav button").forEach(button=>{
  });
 });
 </script>
-
 </body>
 </html>
