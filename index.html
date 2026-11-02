@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0f1115">
+  <meta name="theme-color" content="#04060a">
   <title>Minha.TV | Live TV</title>
-  
-  <!-- Biblioteca HLS.js para transmissões ao vivo -->
+  <!-- Biblioteca para tocar os canais ao vivo -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-  
-  <!-- Link para o arquivo de estilos -->
+  <!-- Arquivo de estilo -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Topbar -->
+  <!-- Barra Superior -->
   <header class="topbar">
     <div class="logo">MINHA<span>.TV</span></div>
     <div class="search-container">
@@ -23,11 +21,10 @@
     </div>
   </header>
 
-  <!-- Player Fixo -->
+  <!-- Área do Player (Fica fixo no topo) -->
   <section class="player-hero">
     <div class="player-container">
       <div class="video-wrapper" id="videoWrapper">
-        <!-- O player será injetado aqui pelo app.js -->
         <video id="videoPlayer" controls autoplay muted playsinline crossorigin="anonymous"></video>
       </div>
       <div class="player-info">
@@ -42,10 +39,9 @@
     </div>
   </section>
 
-  <!-- Conteúdo Principal -->
+  <!-- Área do Catálogo de Canais -->
   <main class="main-content">
     <div class="filters" id="filtersContainer">
-      <!-- Os botões de categoria (Incluindo o Acesso Restrito) são gerados pelo app.js -->
       <button class="filter-btn active" data-category="Todos">Todos</button>
     </div>
 
@@ -54,7 +50,7 @@
     </div>
   </main>
 
-  <!-- Link para o arquivo de lógica (app.js) -->
+  <!-- Arquivo de lógica -->
   <script src="app.js"></script>
 </body>
 </html>
